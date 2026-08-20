@@ -24,41 +24,52 @@ public class Coco {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String input = scanner.nextLine();
-            if (input.equals("bye")) {
+            Command command = Command.fromInput(input);
+            if (command == Command.BYE) {
                 break;
             }
 
             System.out.println(LINE);
             try {
-                if (input.equals("list")) {
+                switch (command) {
+                case LIST:
                     System.out.println("Here are the tasks in your list:");
                     for (int i = 0; i < tasks.size(); i++) {
                         System.out.println((i + 1) + "." + tasks.get(i));
                     }
-                } else if (input.equals("mark") || input.startsWith("mark ")) {
+                    break;
+                case MARK: {
                     int index = parseTaskIndex(input, "mark", tasks.size());
                     tasks.get(index).markAsDone();
                     System.out.println("Nice! I've marked this task as done:");
                     System.out.println("  " + tasks.get(index));
-                } else if (input.equals("unmark") || input.startsWith("unmark ")) {
+                    break;
+                }
+                case UNMARK: {
                     int index = parseTaskIndex(input, "unmark", tasks.size());
                     tasks.get(index).markAsNotDone();
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.println("  " + tasks.get(index));
-                } else if (input.equals("delete") || input.startsWith("delete ")) {
+                    break;
+                }
+                case DELETE: {
                     int index = parseTaskIndex(input, "delete", tasks.size());
                     Task removed = tasks.remove(index);
                     System.out.println("Noted. I've removed this task:");
                     System.out.println("  " + removed);
                     System.out.println("Now you have " + tasks.size() + " tasks in the list.");
-                } else if (input.equals("todo") || input.startsWith("todo ")) {
-                    String description = input.equals("todo") ? "" : input.substring(5).trim();
+                    break;
+                }
+                case TODO: {
+                    String description = argumentsOf(input, command).trim();
                     if (description.isEmpty()) {
                         throw new CocoException("Sorry, todo description cannot be empty!");
                     }
                     addTask(tasks, new Todo(description));
-                } else if (input.equals("deadline") || input.startsWith("deadline ")) {
-                    String rest = input.equals("deadline") ? "" : input.substring(9);
+                    break;
+                }
+                case DEADLINE: {
+                    String rest = argumentsOf(input, command);
                     int byIndex = rest.indexOf("/by");
                     if (byIndex == -1) {
                         throw new CocoException(
@@ -74,8 +85,10 @@ public class Coco {
                         throw new CocoException("Sorry, the date for a deadline cannot be empty!");
                     }
                     addTask(tasks, new Deadline(description, by));
-                } else if (input.equals("event") || input.startsWith("event ")) {
-                    String rest = input.equals("event") ? "" : input.substring(6);
+                    break;
+                }
+                case EVENT: {
+                    String rest = argumentsOf(input, command);
                     int fromIndex = rest.indexOf("/from");
                     int toIndex = rest.indexOf("/to");
                     if (fromIndex == -1 || toIndex == -1 || toIndex < fromIndex) {
@@ -94,7 +107,9 @@ public class Coco {
                                 "Sorry, an event needs both a start and end time!");
                     }
                     addTask(tasks, new Event(description, from, to));
-                } else {
+                    break;
+                }
+                default:
                     throw new CocoException("Boy, what that mean?");
                 }
             } catch (CocoException e) {
@@ -107,6 +122,11 @@ public class Coco {
         System.out.println(LINE);
         System.out.println("Bye. Hope to see you again soon!");
         System.out.println(LINE);
+    }
+
+    private static String argumentsOf(String input, Command command) {
+        String keyword = command.name().toLowerCase();
+        return input.equals(keyword) ? "" : input.substring(keyword.length() + 1);
     }
 
     private static int parseTaskIndex(String input, String command, int taskCount)
