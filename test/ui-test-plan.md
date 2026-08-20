@@ -268,3 +268,146 @@ ____________________________________________________________
 Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
+
+## Test 6: Todo/deadline/event validation errors
+
+Aim: Verify empty descriptions and malformed/missing `/by`, `/from`, `/to`
+markers are rejected with a specific error message instead of crashing or
+silently adding a bad task.
+
+### Input
+
+```
+todo
+deadline
+deadline return book
+deadline return book /by
+event
+event project meeting
+event project meeting /from Mon 2pm
+bye
+```
+
+### Expected Output
+
+```
+____________________________________________________________
+  ____ ___   ____ ___  
+ / ___/ _ \ / ___/ _ \ 
+| |  | | | | |  | | | |
+| |__| |_| | |__| |_| |
+ \____\___/ \____\___/ 
+
+Hello! I'm Coco.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Sorry, todo description cannot be empty!
+____________________________________________________________
+____________________________________________________________
+Sorry, a deadline needs a '/by' date! Try: deadline <description> /by <date>
+____________________________________________________________
+____________________________________________________________
+Sorry, a deadline needs a '/by' date! Try: deadline <description> /by <date>
+____________________________________________________________
+____________________________________________________________
+Sorry, the date for a deadline cannot be empty!
+____________________________________________________________
+____________________________________________________________
+Sorry, an event needs '/from' and '/to'! Try: event <description> /from <start> /to <end>
+____________________________________________________________
+____________________________________________________________
+Sorry, an event needs '/from' and '/to'! Try: event <description> /from <start> /to <end>
+____________________________________________________________
+____________________________________________________________
+Sorry, an event needs '/from' and '/to'! Try: event <description> /from <start> /to <end>
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+## Test 7: Unknown command
+
+Aim: Verify input that doesn't match any known command produces an error
+message instead of being silently added as a task.
+
+### Input
+
+```
+blah
+bye
+```
+
+### Expected Output
+
+```
+____________________________________________________________
+  ____ ___   ____ ___  
+ / ___/ _ \ / ___/ _ \ 
+| |  | | | | |  | | | |
+| |__| |_| | |__| |_| |
+ \____\___/ \____\___/ 
+
+Hello! I'm Coco.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Boy, what that mean?
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+## Test 8: Invalid task numbers for mark/unmark
+
+Aim: Verify `mark`/`unmark` reject an out-of-range index, a non-numeric
+argument, and a missing argument, each with a specific error message, without
+crashing the program.
+
+### Input
+
+```
+todo read book
+mark 5
+mark abc
+mark
+unmark 0
+bye
+```
+
+### Expected Output
+
+```
+____________________________________________________________
+  ____ ___   ____ ___  
+ / ___/ _ \ / ___/ _ \ 
+| |  | | | | |  | | | |
+| |__| |_| | |__| |_| |
+ \____\___/ \____\___/ 
+
+Hello! I'm Coco.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] read book
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Sorry, there is no task number 5!
+____________________________________________________________
+____________________________________________________________
+Sorry, 'abc' is not a valid task number!
+____________________________________________________________
+____________________________________________________________
+Sorry, tell me which task number to mark!
+____________________________________________________________
+____________________________________________________________
+Sorry, there is no task number 0!
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
