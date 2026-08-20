@@ -19,6 +19,7 @@ public class Coco {
         System.out.println(LINE);
 
         String[] tasks = new String[MAX_TASKS];
+        boolean[] isDone = new boolean[MAX_TASKS];
         int taskCount = 0;
 
         Scanner scanner = new Scanner(System.in);
@@ -30,9 +31,16 @@ public class Coco {
 
             System.out.println(LINE);
             if (input.equals("list")) {
+                System.out.println("Here are the tasks in your list:");
                 for (int i = 0; i < taskCount; i++) {
-                    System.out.println((i + 1) + ". " + tasks[i]);
+                    String checkbox = isDone[i] ? "[X]" : "[ ]";
+                    System.out.println((i + 1) + "." + checkbox + " " + tasks[i]);
                 }
+            } else if (input.startsWith("mark ")) {
+                int index = Integer.parseInt(input.substring(5).trim()) - 1;
+                isDone[index] = true;
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println("  [X] " + tasks[index]);
             } else {
                 tasks[taskCount] = input;
                 taskCount++;
