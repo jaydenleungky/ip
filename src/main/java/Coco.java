@@ -1,9 +1,10 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Coco {
     private static final String LINE =
             "____________________________________________________________";
-    private static final int MAX_TASKS = 100;
 
     public static void main(String[] args) {
         String banner = "  ____ ___   ____ ___  \n"
@@ -18,8 +19,7 @@ public class Coco {
         System.out.println("What can I do for you?");
         System.out.println(LINE);
 
-        Task[] tasks = new Task[MAX_TASKS];
-        int taskCount = 0;
+        List<Task> tasks = new ArrayList<>();
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -32,25 +32,31 @@ public class Coco {
             try {
                 if (input.equals("list")) {
                     System.out.println("Here are the tasks in your list:");
-                    for (int i = 0; i < taskCount; i++) {
-                        System.out.println((i + 1) + "." + tasks[i]);
+                    for (int i = 0; i < tasks.size(); i++) {
+                        System.out.println((i + 1) + "." + tasks.get(i));
                     }
                 } else if (input.equals("mark") || input.startsWith("mark ")) {
-                    int index = parseTaskIndex(input, "mark", taskCount);
-                    tasks[index].markAsDone();
+                    int index = parseTaskIndex(input, "mark", tasks.size());
+                    tasks.get(index).markAsDone();
                     System.out.println("Nice! I've marked this task as done:");
-                    System.out.println("  " + tasks[index]);
+                    System.out.println("  " + tasks.get(index));
                 } else if (input.equals("unmark") || input.startsWith("unmark ")) {
-                    int index = parseTaskIndex(input, "unmark", taskCount);
-                    tasks[index].markAsNotDone();
+                    int index = parseTaskIndex(input, "unmark", tasks.size());
+                    tasks.get(index).markAsNotDone();
                     System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println("  " + tasks[index]);
+                    System.out.println("  " + tasks.get(index));
+                } else if (input.equals("delete") || input.startsWith("delete ")) {
+                    int index = parseTaskIndex(input, "delete", tasks.size());
+                    Task removed = tasks.remove(index);
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println("  " + removed);
+                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
                 } else if (input.equals("todo") || input.startsWith("todo ")) {
                     String description = input.equals("todo") ? "" : input.substring(5).trim();
                     if (description.isEmpty()) {
                         throw new CocoException("Sorry, todo description cannot be empty!");
                     }
-                    taskCount = addTask(tasks, taskCount, new Todo(description));
+                    addTask(tasks, new Todo(description));
                 } else if (input.equals("deadline") || input.startsWith("deadline ")) {
                     String rest = input.equals("deadline") ? "" : input.substring(9);
                     int byIndex = rest.indexOf("/by");
@@ -67,7 +73,7 @@ public class Coco {
                     if (by.isEmpty()) {
                         throw new CocoException("Sorry, the date for a deadline cannot be empty!");
                     }
-                    taskCount = addTask(tasks, taskCount, new Deadline(description, by));
+                    addTask(tasks, new Deadline(description, by));
                 } else if (input.equals("event") || input.startsWith("event ")) {
                     String rest = input.equals("event") ? "" : input.substring(6);
                     int fromIndex = rest.indexOf("/from");
@@ -87,7 +93,7 @@ public class Coco {
                         throw new CocoException(
                                 "Sorry, an event needs both a start and end time!");
                     }
-                    taskCount = addTask(tasks, taskCount, new Event(description, from, to));
+                    addTask(tasks, new Event(description, from, to));
                 } else {
                     throw new CocoException("Boy, what that mean?");
                 }
@@ -121,12 +127,10 @@ public class Coco {
         return index;
     }
 
-    private static int addTask(Task[] tasks, int taskCount, Task task) {
-        tasks[taskCount] = task;
-        taskCount++;
+    private static void addTask(List<Task> tasks, Task task) {
+        tasks.add(task);
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + task);
-        System.out.println("Now you have " + taskCount + " tasks in the list.");
-        return taskCount;
+        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
     }
 }

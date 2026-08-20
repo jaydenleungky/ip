@@ -531,3 +531,165 @@ ____________________________________________________________
 Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
+
+## Test 10: Delete a task
+
+Aim: Verify `delete <n>` removes the specified task, prints the "Noted"
+confirmation with the removed task and updated count, and that `list`
+reflects the removal with the remaining tasks renumbered.
+
+### Input
+
+```
+todo read book
+mark 1
+deadline return book /by June 6th
+mark 2
+event project meeting /from Aug 6th 2pm /to 4pm
+todo join sports club
+mark 4
+todo borrow book
+list
+delete 3
+list
+bye
+```
+
+### Expected Output
+
+```
+____________________________________________________________
+  ____ ___   ____ ___  
+ / ___/ _ \ / ___/ _ \ 
+| |  | | | | |  | | | |
+| |__| |_| | |__| |_| |
+ \____\___/ \____\___/ 
+
+Hello! I'm Coco.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] read book
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+  [T][X] read book
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [D][ ] return book (by: June 6th)
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+  [D][X] return book (by: June 6th)
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] join sports club
+Now you have 4 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+  [T][X] join sports club
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] borrow book
+Now you have 5 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[T][X] read book
+2.[D][X] return book (by: June 6th)
+3.[E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+4.[T][X] join sports club
+5.[T][ ] borrow book
+____________________________________________________________
+____________________________________________________________
+Noted. I've removed this task:
+  [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
+Now you have 4 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[T][X] read book
+2.[D][X] return book (by: June 6th)
+3.[T][X] join sports club
+4.[T][ ] borrow book
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+## Test 11: Delete validation errors, including emptying the list
+
+Aim: Verify `delete` rejects an out-of-range index, a non-numeric index,
+and a missing index the same way `mark`/`unmark` do, and that deleting the
+last remaining task correctly leaves an empty list (not a crash or a stale
+entry).
+
+### Input
+
+```
+todo read book
+delete 5
+delete abc
+delete
+list
+delete 1
+list
+bye
+```
+
+### Expected Output
+
+```
+____________________________________________________________
+  ____ ___   ____ ___  
+ / ___/ _ \ / ___/ _ \ 
+| |  | | | | |  | | | |
+| |__| |_| | |__| |_| |
+ \____\___/ \____\___/ 
+
+Hello! I'm Coco.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] read book
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Sorry, there is no task number 5!
+____________________________________________________________
+____________________________________________________________
+Sorry, 'abc' is not a valid task number!
+____________________________________________________________
+____________________________________________________________
+Sorry, tell me which task number to delete!
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[T][ ] read book
+____________________________________________________________
+____________________________________________________________
+Noted. I've removed this task:
+  [T][ ] read book
+Now you have 0 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
