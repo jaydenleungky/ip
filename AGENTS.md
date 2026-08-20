@@ -33,3 +33,13 @@ Ensure that Java 25 is used when running the application or build tasks. On macO
 Use lightweight tags unless the user requests an annotated tag.
 When proposing or creating a commit message, include enough detail to explain the rationale for the change.
 Do not commit or push unless explicitly asked.
+
+## Testing
+
+After each code update that changes the chatbot's runtime behavior:
+
+1. Update `test/ui-test-plan.md` if the change adds, removes, or alters a
+   command or its output (new/changed test cases; never hand-type expected
+   output — capture it by actually running the program).
+2. Invoke the `test-ui` skill to compile the program and run the test plan
+   against it, reporting any failure immediately.
