@@ -79,15 +79,14 @@ def compile_program(repo_root: Path, build_dir: Path) -> None:
         raise SystemExit("Compilation failed")
 
 
-def run_case(build_dir: Path, main_class: str, stdin_text: str) -> str:
-    result = subprocess.run(
+def run_case(build_dir: Path, main_class: str, stdin_text: str) -> subprocess.CompletedProcess:
+    return subprocess.run(
         ["java", "-cp", str(build_dir), main_class],
         input=stdin_text,
         capture_output=True,
         text=True,
         timeout=15,
     )
-    return result.stdout
 
 
 def main() -> None:
@@ -115,7 +114,8 @@ def main() -> None:
         print("--- console input ---")
         print(case["input"])
 
-        actual = run_case(build_dir, main_class, case["input"])
+        result = run_case(build_dir, main_class, case["input"])
+        actual = result.stdout
         print("--- console output ---")
         print(actual, end="" if actual.endswith("\n") else "\n")
 
@@ -124,6 +124,11 @@ def main() -> None:
 
         if actual_normalized != expected_normalized:
             print(f"\nFAILED: Test {i} ({case['name']})")
+            if result.returncode != 0 or result.stderr.strip():
+                print(
+                    f"\n--- program crashed (exit code {result.returncode}) ---"
+                )
+                print(result.stderr.strip())
             print("\n--- expected output ---")
             print(expected_normalized)
             print("\n--- actual output ---")

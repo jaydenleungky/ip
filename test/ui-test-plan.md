@@ -411,3 +411,123 @@ ____________________________________________________________
 Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
+
+## Test 9: Interleaved valid/invalid commands preserve correct state
+
+Aim: Verify that failed operations (empty descriptions, malformed
+deadline/event, an unknown command, and mark/unmark at exactly
+`taskCount + 1`) never corrupt internal state — no phantom tasks are added,
+the task count and done-status of existing tasks stay correct, and a valid
+command immediately after an invalid one still targets the right task.
+This specifically checks the boundary case of marking/unmarking the task
+number one past the end of the list, which a generic "large out-of-range
+number" test case would not catch.
+
+### Input
+
+```
+todo read book
+todo
+list
+mark 2
+list
+mark 1
+unmark 2
+list
+deadline return book /by June 6th
+deadline return book /by
+event meeting /from Mon 2pm /to 4pm
+event meeting /from Mon 2pm
+blah
+list
+mark 4
+unmark 1
+list
+bye
+```
+
+### Expected Output
+
+```
+____________________________________________________________
+  ____ ___   ____ ___  
+ / ___/ _ \ / ___/ _ \ 
+| |  | | | | |  | | | |
+| |__| |_| | |__| |_| |
+ \____\___/ \____\___/ 
+
+Hello! I'm Coco.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] read book
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Sorry, todo description cannot be empty!
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[T][ ] read book
+____________________________________________________________
+____________________________________________________________
+Sorry, there is no task number 2!
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[T][ ] read book
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+  [T][X] read book
+____________________________________________________________
+____________________________________________________________
+Sorry, there is no task number 2!
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[T][X] read book
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [D][ ] return book (by: June 6th)
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Sorry, the date for a deadline cannot be empty!
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [E][ ] meeting (from: Mon 2pm to: 4pm)
+Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Sorry, an event needs '/from' and '/to'! Try: event <description> /from <start> /to <end>
+____________________________________________________________
+____________________________________________________________
+Boy, what that mean?
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[T][X] read book
+2.[D][ ] return book (by: June 6th)
+3.[E][ ] meeting (from: Mon 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+Sorry, there is no task number 4!
+____________________________________________________________
+____________________________________________________________
+OK, I've marked this task as not done yet:
+  [T][ ] read book
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[T][ ] read book
+2.[D][ ] return book (by: June 6th)
+3.[E][ ] meeting (from: Mon 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
