@@ -23,3 +23,15 @@ Prerequisites: JDK 25, update Intellij to the most recent version.
    ```
 
 **Warning:** Keep the `src\main\java` folder as the root folder for Java files (i.e., don't rename those folders or move Java files to another folder outside of this folder path), as this is the default location some tools (e.g., Gradle) expect to find Java files.
+
+## Building and running with Gradle
+
+This project uses Gradle (via the bundled wrapper, so no separate Gradle install is needed).
+
+- Run the chatbot directly: `./gradlew run` (`gradlew.bat run` on Windows).
+- Run the JUnit tests: `./gradlew test`.
+- Build an executable JAR: `./gradlew shadowJar`. This produces `build/libs/coco.jar`, which can be run on its own with:
+  ```
+  java -jar "coco.jar"
+  ```
+  (run this command from the same folder as the JAR file).
