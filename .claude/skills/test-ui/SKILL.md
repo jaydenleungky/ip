@@ -14,7 +14,7 @@ expectations. Use this after any change to the chatbot's runtime behavior.
 2. Run the bundled test runner from the repository root:
 
    ```bash
-   python3 .claude/skills/test-ui/scripts/run_ui_tests.py . test/ui-test-plan.md Coco
+   python3 .claude/skills/test-ui/scripts/run_ui_tests.py . test/ui-test-plan.md coco.Coco
    ```
 
    The script:

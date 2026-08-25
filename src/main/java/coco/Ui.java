@@ -1,3 +1,5 @@
+package coco;
+
 import java.util.Scanner;
 
 /**

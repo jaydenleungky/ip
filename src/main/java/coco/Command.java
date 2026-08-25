@@ -1,3 +1,5 @@
+package coco;
+
 public enum Command {
     LIST,
     MARK,
