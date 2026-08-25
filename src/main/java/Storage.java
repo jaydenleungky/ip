@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,7 +83,11 @@ public class Storage {
             if (parts.length < 4) {
                 return null;
             }
-            task = new Deadline(description, parts[3]);
+            try {
+                task = new Deadline(description, LocalDate.parse(parts[3]));
+            } catch (DateTimeParseException e) {
+                return null;
+            }
             break;
         case "E":
             if (parts.length < 5) {
