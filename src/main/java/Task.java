@@ -27,4 +27,12 @@ public class Task {
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
     }
+
+    /**
+     * Encodes this task as a single line for saving to disk. Subclasses
+     * prepend their type letter and append any extra fields.
+     */
+    public String toSaveFormat() {
+        return (isDone ? "1" : "0") + " | " + description;
+    }
 }

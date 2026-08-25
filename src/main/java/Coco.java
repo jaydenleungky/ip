@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,7 +18,7 @@ public class Coco {
         System.out.println("What can I do for you?");
         System.out.println(LINE);
 
-        List<Task> tasks = new ArrayList<>();
+        List<Task> tasks = Storage.load();
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -41,6 +40,7 @@ public class Coco {
                 case MARK: {
                     int index = parseTaskIndex(input, "mark", tasks.size());
                     tasks.get(index).markAsDone();
+                    Storage.save(tasks);
                     System.out.println("Nice! I've marked this task as done:");
                     System.out.println("  " + tasks.get(index));
                     break;
@@ -48,6 +48,7 @@ public class Coco {
                 case UNMARK: {
                     int index = parseTaskIndex(input, "unmark", tasks.size());
                     tasks.get(index).markAsNotDone();
+                    Storage.save(tasks);
                     System.out.println("OK, I've marked this task as not done yet:");
                     System.out.println("  " + tasks.get(index));
                     break;
@@ -55,6 +56,7 @@ public class Coco {
                 case DELETE: {
                     int index = parseTaskIndex(input, "delete", tasks.size());
                     Task removed = tasks.remove(index);
+                    Storage.save(tasks);
                     System.out.println("Noted. I've removed this task:");
                     System.out.println("  " + removed);
                     System.out.println("Now you have " + tasks.size() + " tasks in the list.");
@@ -149,6 +151,7 @@ public class Coco {
 
     private static void addTask(List<Task> tasks, Task task) {
         tasks.add(task);
+        Storage.save(tasks);
         System.out.println("Got it. I've added this task:");
         System.out.println("  " + task);
         System.out.println("Now you have " + tasks.size() + " tasks in the list.");

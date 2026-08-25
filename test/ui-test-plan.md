@@ -6,6 +6,15 @@ between test cases). The `test-ui` skill parses this file, runs the program with
 each test case's input, and compares the captured console output against the
 expected output verbatim.
 
+Since Level 7, the chatbot persists its task list to `./data/coco.txt` (relative
+to the working directory) and reloads it on startup. To keep test cases
+independent despite this, `run_ui_tests.py` deletes the `data/` folder before
+every case, so each one still starts from an empty task list. The
+`### Input`/`### Expected Output` format only covers a single process per test
+case, so persistence across a restart (write in one run, read back in the
+next) is verified manually rather than via a formal test case here — see the
+project's git history/PR description for that verification.
+
 ## Test 1: Greet and exit
 
 Aim: Verify the banner, greeting, and prompt are printed, and the program exits

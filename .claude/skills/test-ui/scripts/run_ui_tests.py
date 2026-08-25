@@ -34,6 +34,7 @@ standard library is used.
 from __future__ import annotations
 
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -79,13 +80,21 @@ def compile_program(repo_root: Path, build_dir: Path) -> None:
         raise SystemExit("Compilation failed")
 
 
-def run_case(build_dir: Path, main_class: str, stdin_text: str) -> subprocess.CompletedProcess:
+def run_case(
+    repo_root: Path, build_dir: Path, main_class: str, stdin_text: str
+) -> subprocess.CompletedProcess:
+    # The chatbot persists tasks to ./data relative to its working directory.
+    # Wipe it before every case so each one still runs against a fresh
+    # instance, as the test plan requires, instead of inheriting tasks
+    # saved by a previous case.
+    shutil.rmtree(repo_root / "data", ignore_errors=True)
     return subprocess.run(
         ["java", "-cp", str(build_dir), main_class],
         input=stdin_text,
         capture_output=True,
         text=True,
         timeout=15,
+        cwd=repo_root,
     )
 
 
@@ -114,7 +123,7 @@ def main() -> None:
         print("--- console input ---")
         print(case["input"])
 
-        result = run_case(build_dir, main_class, case["input"])
+        result = run_case(repo_root, build_dir, main_class, case["input"])
         actual = result.stdout
         print("--- console output ---")
         print(actual, end="" if actual.endswith("\n") else "\n")
@@ -137,6 +146,7 @@ def main() -> None:
 
         print(f"PASSED: Test {i} ({case['name']})\n")
 
+    shutil.rmtree(repo_root / "data", ignore_errors=True)
     print(f"All {len(cases)} test case(s) passed.")
 
 
