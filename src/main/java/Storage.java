@@ -12,20 +12,24 @@ import java.util.List;
  * list survives across runs of the chatbot.
  */
 public class Storage {
-    private static final Path FILE_PATH = Paths.get("data", "coco.txt");
+    private final Path filePath;
+
+    public Storage(String filePath) {
+        this.filePath = Paths.get(filePath);
+    }
 
     /**
      * Loads tasks from the data file. If the file (or its parent folder)
      * does not exist yet, e.g. on first run, an empty list is returned
      * instead of failing.
      */
-    public static List<Task> load() {
+    public List<Task> load() {
         List<Task> tasks = new ArrayList<>();
-        if (!Files.exists(FILE_PATH)) {
+        if (!Files.exists(filePath)) {
             return tasks;
         }
         try {
-            for (String line : Files.readAllLines(FILE_PATH)) {
+            for (String line : Files.readAllLines(filePath)) {
                 if (line.isBlank()) {
                     continue;
                 }
@@ -45,9 +49,9 @@ public class Storage {
      * Writes the given tasks to the data file, creating the parent folder
      * first if it doesn't exist yet.
      */
-    public static void save(List<Task> tasks) {
+    public void save(List<Task> tasks) {
         try {
-            Path parent = FILE_PATH.getParent();
+            Path parent = filePath.getParent();
             if (parent != null) {
                 Files.createDirectories(parent);
             }
@@ -55,7 +59,7 @@ public class Storage {
             for (Task task : tasks) {
                 lines.add(task.toSaveFormat());
             }
-            Files.write(FILE_PATH, lines);
+            Files.write(filePath, lines);
         } catch (IOException e) {
             System.out.println("Sorry, I couldn't save your tasks (" + e.getMessage() + ").");
         }
