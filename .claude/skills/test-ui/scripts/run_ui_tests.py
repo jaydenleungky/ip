@@ -6,7 +6,7 @@ and comparing the captured stdout against the expected output verbatim.
 
     python3 run_ui_tests.py [repo_root] [test_plan_path] [main_class]
 
-Defaults: repo_root=".", test_plan_path="test/ui-test-plan.md", main_class="Coco"
+Defaults: repo_root=".", test_plan_path="test/ui-test-plan.md", main_class="coco.Coco"
 
 Each test case in the plan file looks like:
 
@@ -65,7 +65,7 @@ def parse_test_plan(text: str) -> list[dict]:
 
 
 def compile_program(repo_root: Path, build_dir: Path) -> None:
-    src_files = sorted((repo_root / "src" / "main" / "java").glob("*.java"))
+    src_files = sorted((repo_root / "src" / "main" / "java").rglob("*.java"))
     if not src_files:
         raise SystemExit("No Java source files found under src/main/java")
     build_dir.mkdir(parents=True, exist_ok=True)
@@ -103,7 +103,7 @@ def main() -> None:
     plan_path = (
         Path(sys.argv[2]) if len(sys.argv) > 2 else repo_root / "test" / "ui-test-plan.md"
     )
-    main_class = sys.argv[3] if len(sys.argv) > 3 else "Coco"
+    main_class = sys.argv[3] if len(sys.argv) > 3 else "coco.Coco"
 
     if not plan_path.exists():
         raise SystemExit(f"Test plan not found: {plan_path}")

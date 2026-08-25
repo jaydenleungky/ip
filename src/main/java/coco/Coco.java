@@ -1,3 +1,5 @@
+package coco;
+
 public class Coco {
     private final Storage storage;
     private final Ui ui;
