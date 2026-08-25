@@ -87,13 +87,15 @@ ____________________________________________________________
 ## Test 3: Add a deadline and an event, then list
 
 Aim: Verify `deadline <description> /by <date>` and `event <description> /from
-<start> /to <end>` add tasks with the `[D]`/`[E]` markers and their date fields,
-and that `list` renders both correctly.
+<start> /to <end>` add tasks with the `[D]`/`[E]` markers and their date
+fields, that `deadline`'s `/by` date (given as `yyyy-mm-dd`) is stored and
+displayed in the `MMM dd yyyy` format, and that `list` renders both task
+types correctly.
 
 ### Input
 
 ```
-deadline return book /by Sunday
+deadline return book /by 2019-10-15
 event project meeting /from Mon 2pm /to 4pm
 list
 bye
@@ -114,7 +116,7 @@ What can I do for you?
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [D][ ] return book (by: Sunday)
+  [D][ ] return book (by: Oct 15 2019)
 Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
@@ -124,7 +126,7 @@ Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
-1.[D][ ] return book (by: Sunday)
+1.[D][ ] return book (by: Oct 15 2019)
 2.[E][ ] project meeting (from: Mon 2pm to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
@@ -198,13 +200,13 @@ description with an earlier task (they should be tracked as distinct entries).
 ```
 todo read book
 mark 1
-deadline return book /by June 6th
+deadline return book /by 2019-06-06
 event project meeting /from Aug 6th 2pm /to 4pm
 todo join sports club
 mark 4
 todo borrow book
 list
-deadline return book /by Sunday
+deadline return book /by 2019-10-15
 event project meeting /from Mon 2pm /to 4pm
 bye
 ```
@@ -233,7 +235,7 @@ Nice! I've marked this task as done:
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [D][ ] return book (by: June 6th)
+  [D][ ] return book (by: Jun 06 2019)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
@@ -258,14 +260,14 @@ ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][X] read book
-2.[D][ ] return book (by: June 6th)
+2.[D][ ] return book (by: Jun 06 2019)
 3.[E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
 4.[T][X] join sports club
 5.[T][ ] borrow book
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [D][ ] return book (by: Sunday)
+  [D][ ] return book (by: Oct 15 2019)
 Now you have 6 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
@@ -282,7 +284,8 @@ ____________________________________________________________
 
 Aim: Verify empty descriptions and malformed/missing `/by`, `/from`, `/to`
 markers are rejected with a specific error message instead of crashing or
-silently adding a bad task.
+silently adding a bad task, and that a `/by` date that isn't valid
+`yyyy-mm-dd` is rejected the same way.
 
 ### Input
 
@@ -291,6 +294,7 @@ todo
 deadline
 deadline return book
 deadline return book /by
+deadline return book /by tomorrow
 event
 event project meeting
 event project meeting /from Mon 2pm
@@ -321,6 +325,9 @@ Sorry, a deadline needs a '/by' date! Try: deadline <description> /by <date>
 ____________________________________________________________
 ____________________________________________________________
 Sorry, the date for a deadline cannot be empty!
+____________________________________________________________
+____________________________________________________________
+Sorry, 'tomorrow' is not a valid date! Please use yyyy-mm-dd, e.g. 2019-10-15.
 ____________________________________________________________
 ____________________________________________________________
 Sorry, an event needs '/from' and '/to'! Try: event <description> /from <start> /to <end>
@@ -443,7 +450,7 @@ list
 mark 1
 unmark 2
 list
-deadline return book /by June 6th
+deadline return book /by 2019-06-06
 deadline return book /by
 event meeting /from Mon 2pm /to 4pm
 event meeting /from Mon 2pm
@@ -500,7 +507,7 @@ Here are the tasks in your list:
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [D][ ] return book (by: June 6th)
+  [D][ ] return book (by: Jun 06 2019)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
@@ -520,7 +527,7 @@ ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][X] read book
-2.[D][ ] return book (by: June 6th)
+2.[D][ ] return book (by: Jun 06 2019)
 3.[E][ ] meeting (from: Mon 2pm to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
@@ -533,7 +540,7 @@ ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][ ] read book
-2.[D][ ] return book (by: June 6th)
+2.[D][ ] return book (by: Jun 06 2019)
 3.[E][ ] meeting (from: Mon 2pm to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
@@ -552,7 +559,7 @@ reflects the removal with the remaining tasks renumbered.
 ```
 todo read book
 mark 1
-deadline return book /by June 6th
+deadline return book /by 2019-06-06
 mark 2
 event project meeting /from Aug 6th 2pm /to 4pm
 todo join sports club
@@ -588,12 +595,12 @@ Nice! I've marked this task as done:
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
-  [D][ ] return book (by: June 6th)
+  [D][ ] return book (by: Jun 06 2019)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
 Nice! I've marked this task as done:
-  [D][X] return book (by: June 6th)
+  [D][X] return book (by: Jun 06 2019)
 ____________________________________________________________
 ____________________________________________________________
 Got it. I've added this task:
@@ -617,7 +624,7 @@ ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][X] read book
-2.[D][X] return book (by: June 6th)
+2.[D][X] return book (by: Jun 06 2019)
 3.[E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
 4.[T][X] join sports club
 5.[T][ ] borrow book
@@ -630,7 +637,7 @@ ____________________________________________________________
 ____________________________________________________________
 Here are the tasks in your list:
 1.[T][X] read book
-2.[D][X] return book (by: June 6th)
+2.[D][X] return book (by: Jun 06 2019)
 3.[T][X] join sports club
 4.[T][ ] borrow book
 ____________________________________________________________

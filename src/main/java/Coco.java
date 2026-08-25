@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -79,12 +81,19 @@ public class Coco {
                                         + "<description> /by <date>");
                     }
                     String description = rest.substring(0, byIndex).trim();
-                    String by = rest.substring(byIndex + 3).trim();
+                    String byText = rest.substring(byIndex + 3).trim();
                     if (description.isEmpty()) {
                         throw new CocoException("Sorry, deadline description cannot be empty!");
                     }
-                    if (by.isEmpty()) {
+                    if (byText.isEmpty()) {
                         throw new CocoException("Sorry, the date for a deadline cannot be empty!");
+                    }
+                    LocalDate by;
+                    try {
+                        by = LocalDate.parse(byText);
+                    } catch (DateTimeParseException e) {
+                        throw new CocoException("Sorry, '" + byText
+                                + "' is not a valid date! Please use yyyy-mm-dd, e.g. 2019-10-15.");
                     }
                     addTask(tasks, new Deadline(description, by));
                     break;
