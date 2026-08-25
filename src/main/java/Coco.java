@@ -1,168 +1,78 @@
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
-import java.util.List;
-import java.util.Scanner;
-
 public class Coco {
-    private static final String LINE =
-            "____________________________________________________________";
+    private final Storage storage;
+    private final Ui ui;
+    private final TaskList tasks;
 
-    public static void main(String[] args) {
-        String banner = "  ____ ___   ____ ___  \n"
-                + " / ___/ _ \\ / ___/ _ \\ \n"
-                + "| |  | | | | |  | | | |\n"
-                + "| |__| |_| | |__| |_| |\n"
-                + " \\____\\___/ \\____\\___/ \n";
+    public Coco(String filePath) {
+        ui = new Ui();
+        storage = new Storage(filePath);
+        tasks = new TaskList(storage.load());
+    }
 
-        System.out.println(LINE);
-        System.out.println(banner);
-        System.out.println("Hello! I'm Coco.");
-        System.out.println("What can I do for you?");
-        System.out.println(LINE);
-
-        List<Task> tasks = Storage.load();
-
-        Scanner scanner = new Scanner(System.in);
+    public void run() {
+        ui.showWelcome();
         while (true) {
-            String input = scanner.nextLine();
-            Command command = Command.fromInput(input);
+            String input = ui.readCommand();
+            Command command = Parser.parseCommand(input);
             if (command == Command.BYE) {
                 break;
             }
 
-            System.out.println(LINE);
+            ui.showLine();
             try {
                 switch (command) {
                 case LIST:
-                    System.out.println("Here are the tasks in your list:");
-                    for (int i = 0; i < tasks.size(); i++) {
-                        System.out.println((i + 1) + "." + tasks.get(i));
-                    }
+                    ui.showTaskList(tasks);
                     break;
                 case MARK: {
-                    int index = parseTaskIndex(input, "mark", tasks.size());
+                    int index = Parser.parseIndex(input, "mark", tasks.size());
                     tasks.get(index).markAsDone();
-                    Storage.save(tasks);
-                    System.out.println("Nice! I've marked this task as done:");
-                    System.out.println("  " + tasks.get(index));
+                    storage.save(tasks.asList());
+                    ui.showTaskMarked(tasks.get(index));
                     break;
                 }
                 case UNMARK: {
-                    int index = parseTaskIndex(input, "unmark", tasks.size());
+                    int index = Parser.parseIndex(input, "unmark", tasks.size());
                     tasks.get(index).markAsNotDone();
-                    Storage.save(tasks);
-                    System.out.println("OK, I've marked this task as not done yet:");
-                    System.out.println("  " + tasks.get(index));
+                    storage.save(tasks.asList());
+                    ui.showTaskUnmarked(tasks.get(index));
                     break;
                 }
                 case DELETE: {
-                    int index = parseTaskIndex(input, "delete", tasks.size());
+                    int index = Parser.parseIndex(input, "delete", tasks.size());
                     Task removed = tasks.remove(index);
-                    Storage.save(tasks);
-                    System.out.println("Noted. I've removed this task:");
-                    System.out.println("  " + removed);
-                    System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+                    storage.save(tasks.asList());
+                    ui.showTaskRemoved(removed, tasks.size());
                     break;
                 }
-                case TODO: {
-                    String description = argumentsOf(input, command).trim();
-                    if (description.isEmpty()) {
-                        throw new CocoException("Sorry, todo description cannot be empty!");
-                    }
-                    addTask(tasks, new Todo(description));
+                case TODO:
+                    addTask(Parser.parseTodo(input));
                     break;
-                }
-                case DEADLINE: {
-                    String rest = argumentsOf(input, command);
-                    int byIndex = rest.indexOf("/by");
-                    if (byIndex == -1) {
-                        throw new CocoException(
-                                "Sorry, a deadline needs a '/by' date! Try: deadline "
-                                        + "<description> /by <date>");
-                    }
-                    String description = rest.substring(0, byIndex).trim();
-                    String byText = rest.substring(byIndex + 3).trim();
-                    if (description.isEmpty()) {
-                        throw new CocoException("Sorry, deadline description cannot be empty!");
-                    }
-                    if (byText.isEmpty()) {
-                        throw new CocoException("Sorry, the date for a deadline cannot be empty!");
-                    }
-                    LocalDate by;
-                    try {
-                        by = LocalDate.parse(byText);
-                    } catch (DateTimeParseException e) {
-                        throw new CocoException("Sorry, '" + byText
-                                + "' is not a valid date! Please use yyyy-mm-dd, e.g. 2019-10-15.");
-                    }
-                    addTask(tasks, new Deadline(description, by));
+                case DEADLINE:
+                    addTask(Parser.parseDeadline(input));
                     break;
-                }
-                case EVENT: {
-                    String rest = argumentsOf(input, command);
-                    int fromIndex = rest.indexOf("/from");
-                    int toIndex = rest.indexOf("/to");
-                    if (fromIndex == -1 || toIndex == -1 || toIndex < fromIndex) {
-                        throw new CocoException(
-                                "Sorry, an event needs '/from' and '/to'! Try: event "
-                                        + "<description> /from <start> /to <end>");
-                    }
-                    String description = rest.substring(0, fromIndex).trim();
-                    String from = rest.substring(fromIndex + 5, toIndex).trim();
-                    String to = rest.substring(toIndex + 3).trim();
-                    if (description.isEmpty()) {
-                        throw new CocoException("Sorry, event description cannot be empty!");
-                    }
-                    if (from.isEmpty() || to.isEmpty()) {
-                        throw new CocoException(
-                                "Sorry, an event needs both a start and end time!");
-                    }
-                    addTask(tasks, new Event(description, from, to));
+                case EVENT:
+                    addTask(Parser.parseEvent(input));
                     break;
-                }
                 default:
                     throw new CocoException("Boy, what that mean?");
                 }
             } catch (CocoException e) {
-                System.out.println(e.getMessage());
+                ui.showError(e.getMessage());
             }
-            System.out.println(LINE);
+            ui.showLine();
         }
-        scanner.close();
-
-        System.out.println(LINE);
-        System.out.println("Bye. Hope to see you again soon!");
-        System.out.println(LINE);
+        ui.close();
+        ui.showGoodbye();
     }
 
-    private static String argumentsOf(String input, Command command) {
-        String keyword = command.name().toLowerCase();
-        return input.equals(keyword) ? "" : input.substring(keyword.length() + 1);
-    }
-
-    private static int parseTaskIndex(String input, String command, int taskCount)
-            throws CocoException {
-        String arg = input.length() > command.length() ? input.substring(command.length()).trim() : "";
-        if (arg.isEmpty()) {
-            throw new CocoException("Sorry, tell me which task number to " + command + "!");
-        }
-        int index;
-        try {
-            index = Integer.parseInt(arg) - 1;
-        } catch (NumberFormatException e) {
-            throw new CocoException("Sorry, '" + arg + "' is not a valid task number!");
-        }
-        if (index < 0 || index >= taskCount) {
-            throw new CocoException("Sorry, there is no task number " + (index + 1) + "!");
-        }
-        return index;
-    }
-
-    private static void addTask(List<Task> tasks, Task task) {
+    private void addTask(Task task) {
         tasks.add(task);
-        Storage.save(tasks);
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  " + task);
-        System.out.println("Now you have " + tasks.size() + " tasks in the list.");
+        storage.save(tasks.asList());
+        ui.showTaskAdded(task, tasks.size());
+    }
+
+    public static void main(String[] args) {
+        new Coco("data/coco.txt").run();
     }
 }
