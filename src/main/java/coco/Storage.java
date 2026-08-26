@@ -16,6 +16,11 @@ import java.util.List;
 public class Storage {
     private final Path filePath;
 
+    /**
+     * Creates a Storage that reads from and writes to the given file path.
+     *
+     * @param filePath Path (relative or absolute) to the data file.
+     */
     public Storage(String filePath) {
         this.filePath = Paths.get(filePath);
     }
@@ -24,6 +29,8 @@ public class Storage {
      * Loads tasks from the data file. If the file (or its parent folder)
      * does not exist yet, e.g. on first run, an empty list is returned
      * instead of failing.
+     *
+     * @return The loaded tasks, in save-file order.
      */
     public List<Task> load() {
         List<Task> tasks = new ArrayList<>();
@@ -50,6 +57,8 @@ public class Storage {
     /**
      * Writes the given tasks to the data file, creating the parent folder
      * first if it doesn't exist yet.
+     *
+     * @param tasks Tasks to save, in the order they should be written.
      */
     public void save(List<Task> tasks) {
         try {
@@ -68,8 +77,11 @@ public class Storage {
     }
 
     /**
-     * Parses one saved line back into a Task. Returns null (skipping the
-     * line) if it is malformed, e.g. from manual editing of the data file.
+     * Parses one saved line back into a Task.
+     *
+     * @param line One line from the data file, e.g. "T | 1 | read book".
+     * @return The parsed Task, or null if the line is malformed (e.g. from
+     *         manual editing of the data file) and should be skipped.
      */
     private static Task parseLine(String line) {
         String[] parts = line.split("\\s*\\|\\s*");

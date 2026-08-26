@@ -1,16 +1,27 @@
 package coco;
 
+/**
+ * Entry point and main loop of the Coco chatbot. Wires together a Ui,
+ * Storage, and TaskList, and dispatches each parsed command to them.
+ */
 public class Coco {
     private final Storage storage;
     private final Ui ui;
     private final TaskList tasks;
 
+    /**
+     * Creates a Coco instance backed by the data file at the given path,
+     * loading any tasks already saved there.
+     *
+     * @param filePath Path to the data file used to save/load tasks.
+     */
     public Coco(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
         tasks = new TaskList(storage.load());
     }
 
+    /** Runs the chatbot's read-parse-execute loop until the user says "bye". */
     public void run() {
         ui.showWelcome();
         while (true) {
@@ -68,12 +79,23 @@ public class Coco {
         ui.showGoodbye();
     }
 
+    /**
+     * Adds a task to the list, persists the updated list, and reports the
+     * addition to the user.
+     *
+     * @param task Task to add.
+     */
     private void addTask(Task task) {
         tasks.add(task);
         storage.save(tasks.asList());
         ui.showTaskAdded(task, tasks.size());
     }
 
+    /**
+     * Starts the chatbot, saving/loading tasks from ./data/coco.txt.
+     *
+     * @param args Not used.
+     */
     public static void main(String[] args) {
         new Coco("data/coco.txt").run();
     }
