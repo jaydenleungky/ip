@@ -114,7 +114,8 @@ public class Parser {
     public static int parseIndex(String input, String commandWord, int taskCount)
             throws CocoException {
         String arg = input.length() > commandWord.length()
-                ? input.substring(commandWord.length()).trim() : "";
+                ? input.substring(commandWord.length()).trim()
+                : "";
         if (arg.isEmpty()) {
             throw new CocoException("Sorry, tell me which task number to " + commandWord + "!");
         }
