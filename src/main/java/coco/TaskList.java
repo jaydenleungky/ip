@@ -9,26 +9,51 @@ import java.util.List;
 public class TaskList {
     private final List<Task> tasks;
 
+    /** Creates an empty task list. */
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
 
+    /**
+     * Creates a task list backed by the given tasks, e.g. ones just loaded
+     * from disk.
+     *
+     * @param tasks Initial tasks.
+     */
     public TaskList(List<Task> tasks) {
         this.tasks = tasks;
     }
 
+    /**
+     * Adds a task to the end of the list.
+     *
+     * @param task Task to add.
+     */
     public void add(Task task) {
         tasks.add(task);
     }
 
+    /**
+     * Removes and returns the task at the given index.
+     *
+     * @param index Zero-based index of the task to remove.
+     * @return The removed task.
+     */
     public Task remove(int index) {
         return tasks.remove(index);
     }
 
+    /**
+     * Returns the task at the given index.
+     *
+     * @param index Zero-based index of the task.
+     * @return The task at that index.
+     */
     public Task get(int index) {
         return tasks.get(index);
     }
 
+    /** Returns the number of tasks in the list. */
     public int size() {
         return tasks.size();
     }

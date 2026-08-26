@@ -8,10 +8,23 @@ import java.time.format.DateTimeParseException;
  * the corresponding Task or task-index argument.
  */
 public class Parser {
+    /**
+     * Identifies which command the given input line is asking for.
+     *
+     * @param input Raw user input line.
+     * @return The matching Command, or Command.UNKNOWN if none match.
+     */
     public static Command parseCommand(String input) {
         return Command.fromInput(input);
     }
 
+    /**
+     * Parses a "todo" command into a Todo task.
+     *
+     * @param input Raw user input line, e.g. "todo read book".
+     * @return The parsed Todo.
+     * @throws CocoException If the description is empty.
+     */
     public static Task parseTodo(String input) throws CocoException {
         String description = argumentsOf(input, Command.TODO).trim();
         if (description.isEmpty()) {
@@ -20,6 +33,16 @@ public class Parser {
         return new Todo(description);
     }
 
+    /**
+     * Parses a "deadline" command into a Deadline task.
+     *
+     * @param input Raw user input line, e.g.
+     *              "deadline return book /by 2019-10-15".
+     * @return The parsed Deadline.
+     * @throws CocoException If the '/by' marker is missing, the description
+     *                       or date is empty, or the date isn't a valid
+     *                       yyyy-mm-dd date.
+     */
     public static Task parseDeadline(String input) throws CocoException {
         String rest = argumentsOf(input, Command.DEADLINE);
         int byIndex = rest.indexOf("/by");
@@ -46,6 +69,16 @@ public class Parser {
         return new Deadline(description, by);
     }
 
+    /**
+     * Parses an "event" command into an Event task.
+     *
+     * @param input Raw user input line, e.g.
+     *              "event meeting /from Mon 2pm /to 4pm".
+     * @return The parsed Event.
+     * @throws CocoException If the '/from' or '/to' marker is missing (or
+     *                       out of order), or the description, start, or
+     *                       end time is empty.
+     */
     public static Task parseEvent(String input) throws CocoException {
         String rest = argumentsOf(input, Command.EVENT);
         int fromIndex = rest.indexOf("/from");
@@ -67,6 +100,17 @@ public class Parser {
         return new Event(description, from, to);
     }
 
+    /**
+     * Parses the task number out of a "mark"/"unmark"/"delete" command and
+     * converts it to a zero-based index.
+     *
+     * @param input Raw user input line, e.g. "mark 2".
+     * @param commandWord The command word the input starts with, e.g. "mark".
+     * @param taskCount Current number of tasks, used to validate range.
+     * @return Zero-based index of the referenced task.
+     * @throws CocoException If the task number is missing, not a number, or
+     *                       out of range.
+     */
     public static int parseIndex(String input, String commandWord, int taskCount)
             throws CocoException {
         String arg = input.length() > commandWord.length()
@@ -86,6 +130,14 @@ public class Parser {
         return index;
     }
 
+    /**
+     * Strips the leading command word off the input, returning whatever
+     * follows it (or an empty string if there's nothing after it).
+     *
+     * @param input Raw user input line.
+     * @param command Command whose keyword should be stripped.
+     * @return The remainder of the input after the command word.
+     */
     private static String argumentsOf(String input, Command command) {
         String keyword = command.name().toLowerCase();
         return input.equals(keyword) ? "" : input.substring(keyword.length() + 1);
