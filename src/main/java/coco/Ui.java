@@ -1,5 +1,6 @@
 package coco;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -113,6 +114,18 @@ public class Ui {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println((i + 1) + "." + tasks.get(i));
+        }
+    }
+
+    /**
+     * Prints every matching task from a "find" search, numbered from 1.
+     *
+     * @param matches Matching tasks to print.
+     */
+    public void showFindResults(List<Task> matches) {
+        System.out.println("Here are the matching tasks in your list:");
+        for (int i = 0; i < matches.size(); i++) {
+            System.out.println((i + 1) + "." + matches.get(i));
         }
     }
 }

@@ -101,6 +101,21 @@ public class Parser {
     }
 
     /**
+     * Parses a "find" command into the keyword to search for.
+     *
+     * @param input Raw user input line, e.g. "find book".
+     * @return The trimmed keyword.
+     * @throws CocoException If the keyword is empty.
+     */
+    public static String parseFind(String input) throws CocoException {
+        String keyword = argumentsOf(input, Command.FIND).trim();
+        if (keyword.isEmpty()) {
+            throw new CocoException("Sorry, tell me what to find!");
+        }
+        return keyword;
+    }
+
+    /**
      * Parses the task number out of a "mark"/"unmark"/"delete" command and
      * converts it to a zero-based index.
      *

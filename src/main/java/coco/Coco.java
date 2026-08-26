@@ -67,6 +67,9 @@ public class Coco {
                 case EVENT:
                     addTask(Parser.parseEvent(input));
                     break;
+                case FIND:
+                    ui.showFindResults(tasks.find(Parser.parseFind(input)));
+                    break;
                 default:
                     throw new CocoException("Boy, what that mean?");
                 }
