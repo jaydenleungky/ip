@@ -709,3 +709,77 @@ ____________________________________________________________
 Bye. Hope to see you again soon!
 ____________________________________________________________
 ```
+
+## Test 12: Find tasks by keyword
+
+Aim: Verify `find <keyword>` matches tasks whose description contains the
+keyword (case-insensitively), across task types, renumbering matches from
+1 rather than using their original list position; that no matches prints
+an empty (but still headed) list instead of an error; and that a missing
+keyword is rejected like other commands' missing arguments.
+
+### Input
+
+```
+todo read book
+deadline return book /by 2019-06-06
+mark 1
+mark 2
+todo join sports club
+find book
+find nope
+find
+bye
+```
+
+### Expected Output
+
+```
+____________________________________________________________
+  ____ ___   ____ ___  
+ / ___/ _ \ / ___/ _ \ 
+| |  | | | | |  | | | |
+| |__| |_| | |__| |_| |
+ \____\___/ \____\___/ 
+
+Hello! I'm Coco.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] read book
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [D][ ] return book (by: Jun 06 2019)
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+  [T][X] read book
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+  [D][X] return book (by: Jun 06 2019)
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [T][ ] join sports club
+Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Here are the matching tasks in your list:
+1.[T][X] read book
+2.[D][X] return book (by: Jun 06 2019)
+____________________________________________________________
+____________________________________________________________
+Here are the matching tasks in your list:
+____________________________________________________________
+____________________________________________________________
+Sorry, tell me what to find!
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```

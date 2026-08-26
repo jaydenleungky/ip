@@ -81,6 +81,22 @@ public class ParserTest {
     }
 
     @Test
+    public void parseFind_validKeyword_returnsTrimmedKeyword() throws CocoException {
+        assertEquals("book", Parser.parseFind("find book"));
+    }
+
+    @Test
+    public void parseFind_emptyKeyword_exceptionThrown() {
+        CocoException e = assertThrows(CocoException.class, () -> Parser.parseFind("find"));
+        assertEquals("Sorry, tell me what to find!", e.getMessage());
+    }
+
+    @Test
+    public void parseFind_blankKeyword_exceptionThrown() {
+        assertThrows(CocoException.class, () -> Parser.parseFind("find    "));
+    }
+
+    @Test
     public void parseIndex_validNumber_returnsZeroBasedIndex() throws CocoException {
         assertEquals(2, Parser.parseIndex("mark 3", "mark", 5));
     }

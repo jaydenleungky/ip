@@ -67,6 +67,14 @@ public class Parser {
         return new Event(description, from, to);
     }
 
+    public static String parseFind(String input) throws CocoException {
+        String keyword = argumentsOf(input, Command.FIND).trim();
+        if (keyword.isEmpty()) {
+            throw new CocoException("Sorry, tell me what to find!");
+        }
+        return keyword;
+    }
+
     public static int parseIndex(String input, String commandWord, int taskCount)
             throws CocoException {
         String arg = input.length() > commandWord.length()
