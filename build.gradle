@@ -2,11 +2,17 @@ plugins {
     id 'java'
     id 'application'
     id 'com.gradleup.shadow' version '9.5.1'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_25
     targetCompatibility = JavaVersion.VERSION_25
+}
+
+javafx {
+    version = '25'
+    modules = ['javafx.controls', 'javafx.fxml']
 }
 
 repositories {
@@ -53,4 +59,11 @@ shadowJar {
 
 run {
     standardInput = System.in
+}
+
+tasks.register('runGui', JavaExec) {
+    group = 'application'
+    description = 'Runs the Coco chatbot with its JavaFX GUI.'
+    mainClass = 'coco.Launcher'
+    classpath = sourceSets.main.runtimeClasspath
 }

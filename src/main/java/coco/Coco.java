@@ -95,6 +95,78 @@ public class Coco {
     }
 
     /**
+     * Returns the greeting shown when a GUI session starts.
+     *
+     * @return The greeting text.
+     */
+    public String greet() {
+        return ui.greetingMessage();
+    }
+
+    /**
+     * Parses and executes one command, returning Coco's reply instead of
+     * printing it - the GUI's equivalent of one iteration of run()'s loop.
+     *
+     * @param input Raw user input line.
+     * @return Coco's reply.
+     */
+    public String getResponse(String input) {
+        Command command = Parser.parseCommand(input);
+        if (command == Command.BYE) {
+            return ui.goodbyeMessage();
+        }
+        try {
+            switch (command) {
+            case LIST:
+                return ui.taskListMessage(tasks);
+            case MARK: {
+                int index = Parser.parseIndex(input, "mark", tasks.size());
+                tasks.get(index).markAsDone();
+                storage.save(tasks.asList());
+                return ui.taskMarkedMessage(tasks.get(index));
+            }
+            case UNMARK: {
+                int index = Parser.parseIndex(input, "unmark", tasks.size());
+                tasks.get(index).markAsNotDone();
+                storage.save(tasks.asList());
+                return ui.taskUnmarkedMessage(tasks.get(index));
+            }
+            case DELETE: {
+                int index = Parser.parseIndex(input, "delete", tasks.size());
+                Task removed = tasks.remove(index);
+                storage.save(tasks.asList());
+                return ui.taskRemovedMessage(removed, tasks.size());
+            }
+            case TODO:
+                return addTaskAndReply(Parser.parseTodo(input));
+            case DEADLINE:
+                return addTaskAndReply(Parser.parseDeadline(input));
+            case EVENT:
+                return addTaskAndReply(Parser.parseEvent(input));
+            case FIND:
+                return ui.findResultsMessage(tasks.find(Parser.parseFind(input)));
+            default:
+                throw new CocoException("Boy, what that mean?");
+            }
+        } catch (CocoException e) {
+            return e.getMessage();
+        }
+    }
+
+    /**
+     * Adds a task to the list, persists the updated list, and returns the
+     * addition message - getResponse()'s equivalent of addTask().
+     *
+     * @param task Task to add.
+     * @return The confirmation message.
+     */
+    private String addTaskAndReply(Task task) {
+        tasks.add(task);
+        storage.save(tasks.asList());
+        return ui.taskAddedMessage(task, tasks.size());
+    }
+
+    /**
      * Starts the chatbot, saving/loading tasks from ./data/coco.txt.
      *
      * @param args Not used.
