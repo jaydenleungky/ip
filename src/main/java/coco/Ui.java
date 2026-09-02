@@ -5,6 +5,9 @@ import java.util.Scanner;
 
 /**
  * Handles all interaction with the user: reading input and printing output.
+ * Each show* method prints to the console; the corresponding *Message
+ * method it delegates to builds the same text without printing it, so a
+ * GUI can reuse the exact wording instead of duplicating it.
  */
 public class Ui {
     private static final String LINE =
@@ -21,16 +24,25 @@ public class Ui {
     public void showWelcome() {
         System.out.println(LINE);
         System.out.println(BANNER);
-        System.out.println("Hello! I'm Coco.");
-        System.out.println("What can I do for you?");
+        System.out.println(greetingMessage());
         System.out.println(LINE);
+    }
+
+    /** Returns the greeting shown at startup (without the console banner). */
+    public String greetingMessage() {
+        return "Hello! I'm Coco.\nWhat can I do for you?";
     }
 
     /** Prints the goodbye message shown when the user exits. */
     public void showGoodbye() {
         System.out.println(LINE);
-        System.out.println("Bye. Hope to see you again soon!");
+        System.out.println(goodbyeMessage());
         System.out.println(LINE);
+    }
+
+    /** Returns the goodbye message shown when the user exits. */
+    public String goodbyeMessage() {
+        return "Bye. Hope to see you again soon!";
     }
 
     /** Prints a divider line, used to separate one response from the next. */
@@ -68,9 +80,19 @@ public class Ui {
      * @param taskCount Total number of tasks after adding it.
      */
     public void showTaskAdded(Task task, int taskCount) {
-        System.out.println("Got it. I've added this task:");
-        System.out.println("  " + task);
-        System.out.println("Now you have " + taskCount + " tasks in the list.");
+        System.out.println(taskAddedMessage(task, taskCount));
+    }
+
+    /**
+     * Returns confirmation text that a task was added.
+     *
+     * @param task Task that was added.
+     * @param taskCount Total number of tasks after adding it.
+     * @return The confirmation message.
+     */
+    public String taskAddedMessage(Task task, int taskCount) {
+        return "Got it. I've added this task:\n  " + task
+                + "\nNow you have " + taskCount + " tasks in the list.";
     }
 
     /**
@@ -80,9 +102,19 @@ public class Ui {
      * @param taskCount Total number of tasks after removing it.
      */
     public void showTaskRemoved(Task task, int taskCount) {
-        System.out.println("Noted. I've removed this task:");
-        System.out.println("  " + task);
-        System.out.println("Now you have " + taskCount + " tasks in the list.");
+        System.out.println(taskRemovedMessage(task, taskCount));
+    }
+
+    /**
+     * Returns confirmation text that a task was removed.
+     *
+     * @param task Task that was removed.
+     * @param taskCount Total number of tasks after removing it.
+     * @return The confirmation message.
+     */
+    public String taskRemovedMessage(Task task, int taskCount) {
+        return "Noted. I've removed this task:\n  " + task
+                + "\nNow you have " + taskCount + " tasks in the list.";
     }
 
     /**
@@ -91,8 +123,17 @@ public class Ui {
      * @param task Task that was marked.
      */
     public void showTaskMarked(Task task) {
-        System.out.println("Nice! I've marked this task as done:");
-        System.out.println("  " + task);
+        System.out.println(taskMarkedMessage(task));
+    }
+
+    /**
+     * Returns confirmation text that a task was marked as done.
+     *
+     * @param task Task that was marked.
+     * @return The confirmation message.
+     */
+    public String taskMarkedMessage(Task task) {
+        return "Nice! I've marked this task as done:\n  " + task;
     }
 
     /**
@@ -101,8 +142,17 @@ public class Ui {
      * @param task Task that was unmarked.
      */
     public void showTaskUnmarked(Task task) {
-        System.out.println("OK, I've marked this task as not done yet:");
-        System.out.println("  " + task);
+        System.out.println(taskUnmarkedMessage(task));
+    }
+
+    /**
+     * Returns confirmation text that a task was marked as not done.
+     *
+     * @param task Task that was unmarked.
+     * @return The confirmation message.
+     */
+    public String taskUnmarkedMessage(Task task) {
+        return "OK, I've marked this task as not done yet:\n  " + task;
     }
 
     /**
@@ -111,10 +161,21 @@ public class Ui {
      * @param tasks Tasks to print.
      */
     public void showTaskList(TaskList tasks) {
-        System.out.println("Here are the tasks in your list:");
+        System.out.println(taskListMessage(tasks));
+    }
+
+    /**
+     * Returns every task in the list, numbered from 1, as one block of text.
+     *
+     * @param tasks Tasks to list.
+     * @return The formatted list.
+     */
+    public String taskListMessage(TaskList tasks) {
+        StringBuilder message = new StringBuilder("Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println((i + 1) + "." + tasks.get(i));
+            message.append("\n").append(i + 1).append(".").append(tasks.get(i));
         }
+        return message.toString();
     }
 
     /**
@@ -123,9 +184,21 @@ public class Ui {
      * @param matches Matching tasks to print.
      */
     public void showFindResults(List<Task> matches) {
-        System.out.println("Here are the matching tasks in your list:");
+        System.out.println(findResultsMessage(matches));
+    }
+
+    /**
+     * Returns every matching task from a "find" search, numbered from 1, as
+     * one block of text.
+     *
+     * @param matches Matching tasks.
+     * @return The formatted list.
+     */
+    public String findResultsMessage(List<Task> matches) {
+        StringBuilder message = new StringBuilder("Here are the matching tasks in your list:");
         for (int i = 0; i < matches.size(); i++) {
-            System.out.println((i + 1) + "." + matches.get(i));
+            message.append("\n").append(i + 1).append(".").append(matches.get(i));
         }
+        return message.toString();
     }
 }
