@@ -52,7 +52,7 @@ public class Parser {
                             + "<description> /by <date>");
         }
         String description = rest.substring(0, byIndex).trim();
-        String byText = rest.substring(byIndex + 3).trim();
+        String byText = rest.substring(byIndex + "/by".length()).trim();
         if (description.isEmpty()) {
             throw new CocoException("Sorry, deadline description cannot be empty!");
         }
@@ -89,8 +89,8 @@ public class Parser {
                             + "<description> /from <start> /to <end>");
         }
         String description = rest.substring(0, fromIndex).trim();
-        String from = rest.substring(fromIndex + 5, toIndex).trim();
-        String to = rest.substring(toIndex + 3).trim();
+        String from = rest.substring(fromIndex + "/from".length(), toIndex).trim();
+        String to = rest.substring(toIndex + "/to".length()).trim();
         if (description.isEmpty()) {
             throw new CocoException("Sorry, event description cannot be empty!");
         }
