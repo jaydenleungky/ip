@@ -21,6 +21,9 @@ public class Deadline extends Task {
      */
     public Deadline(String description, LocalDate by) {
         super(description);
+        // Parser.parseDeadline is responsible for rejecting an empty
+        // description before ever reaching this constructor.
+        assert !description.isEmpty() : "description should already be validated by Parser";
         this.by = by;
     }
 

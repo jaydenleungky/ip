@@ -143,6 +143,9 @@ public class Parser {
         if (index < 0 || index >= taskCount) {
             throw new CocoException("Sorry, there is no task number " + (index + 1) + "!");
         }
+        // Documents the guarantee this method makes to its callers (Coco,
+        // TaskList.get/remove): any index returned is already in range.
+        assert index >= 0 && index < taskCount : "range check above should have thrown otherwise";
         return index;
     }
 
