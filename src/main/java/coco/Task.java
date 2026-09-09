@@ -15,6 +15,9 @@ public class Task {
      * @param description Description of the task.
      */
     public Task(String description) {
+        // Every caller (Parser) always passes a trimmed, non-empty String;
+        // this documents that assumption rather than silently accepting null.
+        assert description != null : "Task description should never be null";
         this.description = description;
         this.isDone = false;
     }

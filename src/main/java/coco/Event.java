@@ -16,6 +16,11 @@ public class Event extends Task {
      */
     public Event(String description, String from, String to) {
         super(description);
+        // Parser.parseEvent is responsible for rejecting an empty
+        // description/from/to before ever reaching this constructor.
+        assert !description.isEmpty() : "description should already be validated by Parser";
+        assert from != null && !from.isEmpty() : "from should already be validated by Parser";
+        assert to != null && !to.isEmpty() : "to should already be validated by Parser";
         this.from = from;
         this.to = to;
     }
