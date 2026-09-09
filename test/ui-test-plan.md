@@ -318,10 +318,10 @@ ____________________________________________________________
 Sorry, todo description cannot be empty!
 ____________________________________________________________
 ____________________________________________________________
-Sorry, a deadline needs a '/by' date! Try: deadline <description> /by <date>
+Sorry, a deadline needs a '/by' date! Try: deadline <description> /by <date> [/every daily|weekly|monthly]
 ____________________________________________________________
 ____________________________________________________________
-Sorry, a deadline needs a '/by' date! Try: deadline <description> /by <date>
+Sorry, a deadline needs a '/by' date! Try: deadline <description> /by <date> [/every daily|weekly|monthly]
 ____________________________________________________________
 ____________________________________________________________
 Sorry, the date for a deadline cannot be empty!
@@ -778,6 +778,83 @@ Here are the matching tasks in your list:
 ____________________________________________________________
 ____________________________________________________________
 Sorry, tell me what to find!
+____________________________________________________________
+____________________________________________________________
+Bye. Hope to see you again soon!
+____________________________________________________________
+```
+
+## Test 13: Recurring deadlines
+
+Aim: Verify `deadline <description> /by <date> /every <interval>` creates a
+recurring deadline whose display includes "(every: ...)"; that `mark`-ing a
+recurring deadline advances it to its next occurrence and reports that
+instead of marking it done (staying `[ ]`, date advanced by the interval),
+repeatedly across multiple marks; that a non-recurring deadline in the same
+list still marks done normally; and that an invalid recurrence interval is
+rejected the same way other invalid arguments are.
+
+### Input
+
+```
+deadline standup /by 2026-01-06 /every daily
+deadline submit report /by 2026-01-10
+list
+mark 1
+list
+mark 2
+mark 1
+deadline x /by 2026-01-06 /every fortnightly
+bye
+```
+
+### Expected Output
+
+```
+____________________________________________________________
+  ____ ___   ____ ___  
+ / ___/ _ \ / ___/ _ \ 
+| |  | | | | |  | | | |
+| |__| |_| | |__| |_| |
+ \____\___/ \____\___/ 
+
+Hello! I'm Coco.
+What can I do for you?
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [D][ ] standup (by: Jan 06 2026) (every: daily)
+Now you have 1 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Got it. I've added this task:
+  [D][ ] submit report (by: Jan 10 2026)
+Now you have 2 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[D][ ] standup (by: Jan 06 2026) (every: daily)
+2.[D][ ] submit report (by: Jan 10 2026)
+____________________________________________________________
+____________________________________________________________
+This is a recurring task, so I've moved it to its next occurrence instead of marking it done:
+  [D][ ] standup (by: Jan 07 2026) (every: daily)
+____________________________________________________________
+____________________________________________________________
+Here are the tasks in your list:
+1.[D][ ] standup (by: Jan 07 2026) (every: daily)
+2.[D][ ] submit report (by: Jan 10 2026)
+____________________________________________________________
+____________________________________________________________
+Nice! I've marked this task as done:
+  [D][X] submit report (by: Jan 10 2026)
+____________________________________________________________
+____________________________________________________________
+This is a recurring task, so I've moved it to its next occurrence instead of marking it done:
+  [D][ ] standup (by: Jan 08 2026) (every: daily)
+____________________________________________________________
+____________________________________________________________
+Sorry, 'fortnightly' is not a valid recurrence! Use daily, weekly, or monthly.
 ____________________________________________________________
 ____________________________________________________________
 Bye. Hope to see you again soon!

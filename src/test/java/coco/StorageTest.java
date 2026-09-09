@@ -90,4 +90,41 @@ public class StorageTest {
 
         assertEquals(1, loaded.size());
     }
+
+    @Test
+    public void saveThenLoad_recurringDeadline_roundTripsRecurrence() {
+        Storage storage = new Storage(tempDir.resolve("coco.txt").toString());
+        Deadline recurring = new Deadline("standup", LocalDate.of(2019, 10, 15), Recurrence.DAILY);
+
+        storage.save(List.of(recurring));
+        List<Task> loaded = storage.load();
+
+        assertEquals(1, loaded.size());
+        assertEquals("[D][ ] standup (by: Oct 15 2019) (every: daily)", loaded.get(0).toString());
+    }
+
+    @Test
+    public void load_deadlineLineFromBeforeRecurrenceExisted_loadsAsNonRecurring() throws IOException {
+        Path filePath = tempDir.resolve("coco.txt");
+        Files.writeString(filePath, "D | 0 | old-format deadline | 2019-10-15\n");
+        Storage storage = new Storage(filePath.toString());
+
+        List<Task> loaded = storage.load();
+
+        assertEquals(1, loaded.size());
+        assertEquals("[D][ ] old-format deadline (by: Oct 15 2019)", loaded.get(0).toString());
+    }
+
+    @Test
+    public void load_deadlineLineWithUnknownRecurrence_skipsOnlyThatLine() throws IOException {
+        Path filePath = tempDir.resolve("coco.txt");
+        Files.writeString(filePath,
+                "D | 0 | broken deadline | 2019-10-15 | FORTNIGHTLY\nT | 0 | fine task\n");
+        Storage storage = new Storage(filePath.toString());
+
+        List<Task> loaded = storage.load();
+
+        assertEquals(1, loaded.size());
+        assertEquals("[T][ ] fine task", loaded.get(0).toString());
+    }
 }

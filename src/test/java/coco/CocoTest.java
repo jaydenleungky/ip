@@ -57,6 +57,35 @@ public class CocoTest {
     }
 
     @Test
+    public void getResponse_markRecurringDeadline_advancesToNextOccurrenceInsteadOfMarkingDone() {
+        Coco coco = newCoco();
+        coco.getResponse("deadline standup /by 2026-01-06 /every weekly");
+
+        String firstMarkReply = coco.getResponse("mark 1");
+        assertTrue(firstMarkReply.contains("recurring"));
+        assertTrue(firstMarkReply.contains("Jan 13 2026"));
+        assertTrue(firstMarkReply.contains("[ ]"));
+
+        String secondMarkReply = coco.getResponse("mark 1");
+        assertTrue(secondMarkReply.contains("Jan 20 2026"));
+        assertTrue(secondMarkReply.contains("[ ]"));
+
+        assertEquals("Here are the tasks in your list:\n1.[D][ ] standup (by: Jan 20 2026) (every: weekly)",
+                coco.getResponse("list"));
+    }
+
+    @Test
+    public void getResponse_markNonRecurringDeadline_marksDoneNormally() {
+        Coco coco = newCoco();
+        coco.getResponse("deadline return book /by 2026-01-06");
+
+        String markReply = coco.getResponse("mark 1");
+
+        assertTrue(markReply.contains("marked this task as done"));
+        assertTrue(markReply.contains("[X]"));
+    }
+
+    @Test
     public void getResponse_findMatchingKeyword_returnsOnlyMatchingTasks() {
         Coco coco = newCoco();
         coco.getResponse("todo read book");

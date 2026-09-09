@@ -99,8 +99,14 @@ public class Storage {
                 return null;
             }
             try {
-                task = new Deadline(description, LocalDate.parse(parts[3]));
-            } catch (DateTimeParseException e) {
+                LocalDate by = LocalDate.parse(parts[3]);
+                // A line saved before recurring deadlines existed has no
+                // 5th field; treat that the same as an explicit "-" (not
+                // recurring), rather than rejecting old save files.
+                boolean hasRecurrence = parts.length >= 5 && !parts[4].equals("-");
+                Recurrence recurrence = hasRecurrence ? Recurrence.valueOf(parts[4]) : null;
+                task = new Deadline(description, by, recurrence);
+            } catch (DateTimeParseException | IllegalArgumentException e) {
                 return null;
             }
             break;

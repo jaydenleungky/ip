@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 /**
  * Handles all interaction with the user: reading input and printing output.
- * Each show* method prints to the console; the corresponding *Message
- * method it delegates to builds the same text without printing it, so a
- * GUI can reuse the exact wording instead of duplicating it.
+ * Building each message is split into its own *Message method returning the
+ * text, separate from printing it, so the GUI can reuse the exact wording
+ * (via Coco.getResponse) instead of a second, driftable copy.
  */
 public class Ui {
     private static final String LINE =
@@ -65,25 +65,6 @@ public class Ui {
     }
 
     /**
-     * Prints an error message to the user.
-     *
-     * @param message Message to show.
-     */
-    public void showError(String message) {
-        System.out.println(message);
-    }
-
-    /**
-     * Prints confirmation that a task was added.
-     *
-     * @param task Task that was added.
-     * @param taskCount Total number of tasks after adding it.
-     */
-    public void showTaskAdded(Task task, int taskCount) {
-        System.out.println(taskAddedMessage(task, taskCount));
-    }
-
-    /**
      * Returns confirmation text that a task was added.
      *
      * @param task Task that was added.
@@ -93,16 +74,6 @@ public class Ui {
     public String taskAddedMessage(Task task, int taskCount) {
         return "Got it. I've added this task:\n  " + task
                 + "\nNow you have " + taskCount + " tasks in the list.";
-    }
-
-    /**
-     * Prints confirmation that a task was removed.
-     *
-     * @param task Task that was removed.
-     * @param taskCount Total number of tasks after removing it.
-     */
-    public void showTaskRemoved(Task task, int taskCount) {
-        System.out.println(taskRemovedMessage(task, taskCount));
     }
 
     /**
@@ -118,15 +89,6 @@ public class Ui {
     }
 
     /**
-     * Prints confirmation that a task was marked as done.
-     *
-     * @param task Task that was marked.
-     */
-    public void showTaskMarked(Task task) {
-        System.out.println(taskMarkedMessage(task));
-    }
-
-    /**
      * Returns confirmation text that a task was marked as done.
      *
      * @param task Task that was marked.
@@ -134,15 +96,6 @@ public class Ui {
      */
     public String taskMarkedMessage(Task task) {
         return "Nice! I've marked this task as done:\n  " + task;
-    }
-
-    /**
-     * Prints confirmation that a task was marked as not done.
-     *
-     * @param task Task that was unmarked.
-     */
-    public void showTaskUnmarked(Task task) {
-        System.out.println(taskUnmarkedMessage(task));
     }
 
     /**
@@ -156,12 +109,16 @@ public class Ui {
     }
 
     /**
-     * Prints every task in the list, numbered from 1.
+     * Returns confirmation text that a recurring deadline was advanced to
+     * its next occurrence instead of being marked done, since it doesn't
+     * really finish.
      *
-     * @param tasks Tasks to print.
+     * @param deadline The recurring deadline that was advanced.
+     * @return The confirmation message.
      */
-    public void showTaskList(TaskList tasks) {
-        System.out.println(taskListMessage(tasks));
+    public String taskRecurredMessage(Deadline deadline) {
+        return "This is a recurring task, so I've moved it to its next "
+                + "occurrence instead of marking it done:\n  " + deadline;
     }
 
     /**
@@ -176,15 +133,6 @@ public class Ui {
             message.append("\n").append(i + 1).append(".").append(tasks.get(i));
         }
         return message.toString();
-    }
-
-    /**
-     * Prints every matching task from a "find" search, numbered from 1.
-     *
-     * @param matches Matching tasks to print.
-     */
-    public void showFindResults(List<Task> matches) {
-        System.out.println(findResultsMessage(matches));
     }
 
     /**
