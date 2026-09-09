@@ -40,6 +40,10 @@ public class TaskList {
      * @return The removed task.
      */
     public Task remove(int index) {
+        // Coco always range-checks index via Parser.parseIndex before calling
+        // this; documents that this method trusts its caller rather than
+        // re-validating.
+        assert index >= 0 && index < tasks.size() : "index should already be validated by the caller";
         return tasks.remove(index);
     }
 
@@ -50,6 +54,9 @@ public class TaskList {
      * @return The task at that index.
      */
     public Task get(int index) {
+        // Same trust-the-caller assumption as remove(int): index is expected
+        // to already be validated by Parser.parseIndex.
+        assert index >= 0 && index < tasks.size() : "index should already be validated by the caller";
         return tasks.get(index);
     }
 

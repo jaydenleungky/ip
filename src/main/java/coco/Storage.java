@@ -114,6 +114,9 @@ public class Storage {
             return null;
         }
 
+        // Every branch above either returns null early or assigns task;
+        // documents that this point is only reachable with task assigned.
+        assert task != null : "task should be assigned by every non-returning switch branch";
         if (isDone) {
             task.markAsDone();
         }
