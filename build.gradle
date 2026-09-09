@@ -55,6 +55,12 @@ jar {
 
 shadowJar {
     archiveFileName = 'coco.jar'
+    manifest {
+        // Package the GUI as the jar's entry point, overriding the
+        // application plugin's mainClass (which `run` still uses for
+        // the CLI) just for this task's own manifest.
+        attributes 'Main-Class': 'coco.Launcher'
+    }
 }
 
 run {
