@@ -58,6 +58,32 @@ public class ParserTest {
     }
 
     @Test
+    public void parseDeadline_validRecurrence_returnsRecurringDeadline() throws CocoException {
+        Task task = Parser.parseDeadline("deadline standup /by 2019-10-15 /every daily");
+        assertEquals("[D][ ] standup (by: Oct 15 2019) (every: daily)", task.toString());
+    }
+
+    @Test
+    public void parseDeadline_recurrenceCaseInsensitive_returnsRecurringDeadline() throws CocoException {
+        Task task = Parser.parseDeadline("deadline standup /by 2019-10-15 /every WEEKLY");
+        assertEquals("[D][ ] standup (by: Oct 15 2019) (every: weekly)", task.toString());
+    }
+
+    @Test
+    public void parseDeadline_invalidRecurrence_exceptionThrown() {
+        CocoException e = assertThrows(CocoException.class,
+                () -> Parser.parseDeadline("deadline standup /by 2019-10-15 /every fortnightly"));
+        assertTrue(e.getMessage().contains("not a valid recurrence"));
+    }
+
+    @Test
+    public void parseDeadline_emptyRecurrence_exceptionThrown() {
+        CocoException e = assertThrows(CocoException.class,
+                () -> Parser.parseDeadline("deadline standup /by 2019-10-15 /every"));
+        assertTrue(e.getMessage().contains("how often"));
+    }
+
+    @Test
     public void parseEvent_validFromAndTo_returnsEventWithBothFields() throws CocoException {
         Task task = Parser.parseEvent("event meeting /from Mon 2pm /to 4pm");
         assertEquals("[E][ ] meeting (from: Mon 2pm to: 4pm)", task.toString());

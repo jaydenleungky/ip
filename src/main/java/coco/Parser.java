@@ -34,14 +34,17 @@ public class Parser {
     }
 
     /**
-     * Parses a "deadline" command into a Deadline task.
+     * Parses a "deadline" command into a Deadline task. The date may
+     * optionally be followed by "/every daily|weekly|monthly" to make it a
+     * recurring deadline.
      *
      * @param input Raw user input line, e.g.
-     *              "deadline return book /by 2019-10-15".
+     *              "deadline return book /by 2019-10-15" or
+     *              "deadline standup /by 2019-10-15 /every daily".
      * @return The parsed Deadline.
-     * @throws CocoException If the '/by' marker is missing, the description
-     *                       or date is empty, or the date isn't a valid
-     *                       yyyy-mm-dd date.
+     * @throws CocoException If the '/by' marker is missing, the description,
+     *                       date, or recurrence (when '/every' is given) is
+     *                       empty or invalid.
      */
     public static Task parseDeadline(String input) throws CocoException {
         String rest = argumentsOf(input, Command.DEADLINE);
@@ -49,10 +52,25 @@ public class Parser {
         if (byIndex == -1) {
             throw new CocoException(
                     "Sorry, a deadline needs a '/by' date! Try: deadline "
-                            + "<description> /by <date>");
+                            + "<description> /by <date> [/every daily|weekly|monthly]");
         }
         String description = rest.substring(0, byIndex).trim();
-        String byText = rest.substring(byIndex + "/by".length()).trim();
+        String afterBy = rest.substring(byIndex + "/by".length());
+        int everyIndex = afterBy.indexOf("/every");
+        String byText;
+        Recurrence recurrence = null;
+        if (everyIndex == -1) {
+            byText = afterBy.trim();
+        } else {
+            byText = afterBy.substring(0, everyIndex).trim();
+            String recurrenceText = afterBy.substring(everyIndex + "/every".length()).trim();
+            if (recurrenceText.isEmpty()) {
+                throw new CocoException(
+                        "Sorry, tell me how often this deadline recurs! "
+                                + "Use daily, weekly, or monthly.");
+            }
+            recurrence = Recurrence.fromText(recurrenceText);
+        }
         if (description.isEmpty()) {
             throw new CocoException("Sorry, deadline description cannot be empty!");
         }
@@ -66,7 +84,7 @@ public class Parser {
             throw new CocoException("Sorry, '" + byText
                     + "' is not a valid date! Please use yyyy-mm-dd, e.g. 2019-10-15.");
         }
-        return new Deadline(description, by);
+        return new Deadline(description, by, recurrence);
     }
 
     /**

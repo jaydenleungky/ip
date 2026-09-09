@@ -69,9 +69,15 @@ public class Coco {
                 return ui.taskListMessage(tasks);
             case MARK: {
                 int index = Parser.parseIndex(input, "mark", tasks.size());
-                tasks.get(index).markAsDone();
+                Task task = tasks.get(index);
+                if (task instanceof Deadline deadline && deadline.isRecurring()) {
+                    deadline.advanceToNextOccurrence();
+                    storage.save(tasks.asList());
+                    return ui.taskRecurredMessage(deadline);
+                }
+                task.markAsDone();
                 storage.save(tasks.asList());
-                return ui.taskMarkedMessage(tasks.get(index));
+                return ui.taskMarkedMessage(task);
             }
             case UNMARK: {
                 int index = Parser.parseIndex(input, "unmark", tasks.size());
