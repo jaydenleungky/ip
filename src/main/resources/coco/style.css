@@ -17,19 +17,27 @@
     -fx-background-color: transparent;
 }
 
-.label {
-    -fx-background-radius: 16;
-    -fx-padding: 10 14 10 14;
+/* The user's own message: plain text, no bubble - see DialogBox's Javadoc
+   for why the two sides are styled asymmetrically. */
+.user-message {
+    -fx-text-fill: #3C3C43;
+    -fx-padding: 6 2 6 2;
 }
 
-.user-bubble {
-    -fx-background-color: #4A90E2;
-    -fx-text-fill: white;
-}
-
+/* Coco's reply: an actual bubble, since it's the "other party" the plain
+   .label default would otherwise apply to every Label including the
+   avatar's glyph below - scoped here instead so that glyph stays plain. */
 .coco-bubble {
     -fx-background-color: #E5E5EA;
     -fx-text-fill: #1C1C1E;
+    -fx-background-radius: 14;
+    -fx-padding: 8 12 8 12;
+}
+
+.avatar-glyph {
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
 }
 
 .user-input {

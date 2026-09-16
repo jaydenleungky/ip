@@ -23,6 +23,10 @@ public class Main extends Application {
 
         stage.setTitle("Coco");
         stage.setScene(scene);
+        // JavaFX stages are resizable by default; set only a floor so the
+        // window can't be shrunk small enough to clip the input row.
+        stage.setMinWidth(320);
+        stage.setMinHeight(420);
         fxmlLoader.<MainWindow>getController().setCoco(coco);
         stage.show();
     }
