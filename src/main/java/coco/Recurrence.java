@@ -34,14 +34,16 @@ public enum Recurrence {
      */
     public LocalDate nextOccurrence(LocalDate from) {
         switch (this) {
-        case DAILY:
+        case DAILY -> {
             return from.plusDays(1);
-        case WEEKLY:
+            }
+        case WEEKLY -> {
             return from.plusWeeks(1);
-        case MONTHLY:
+            }
+        case MONTHLY -> {
             return from.plusMonths(1);
-        default:
-            throw new AssertionError("Unhandled Recurrence: " + this);
+            }
+        default -> throw new AssertionError("Unhandled Recurrence: " + this);
         }
     }
 }
