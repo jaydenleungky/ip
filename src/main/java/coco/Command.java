@@ -12,6 +12,7 @@ public enum Command {
     DEADLINE,
     EVENT,
     FIND,
+    COMMANDS,
     BYE,
     UNKNOWN;
 

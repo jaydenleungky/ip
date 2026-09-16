@@ -860,3 +860,46 @@ ____________________________________________________________
 Catch you on the flip side! 🌊
 ____________________________________________________________
 ```
+
+## Test 14: List all commands
+
+Aim: Verify `commands` prints every command and how to format it, so a
+first-time user can discover the full command set without external docs.
+
+### Input
+
+```
+commands
+bye
+```
+
+### Expected Output
+
+```
+____________________________________________________________
+  ____ ___   ____ ___  
+ / ___/ _ \ / ___/ _ \ 
+| |  | | | | |  | | | |
+| |__| |_| | |__| |_| |
+ \____\___/ \____\___/ 
+
+Hey hey, Coco here! 🌴
+What're we getting done today?
+____________________________________________________________
+____________________________________________________________
+Here's the full lineup, no worries:
+  todo <description> - add a todo
+  deadline <description> /by <yyyy-mm-dd> [/every daily|weekly|monthly] - add a deadline, optionally recurring
+  event <description> /from <start> /to <end> - add an event
+  list - show every task
+  find <keyword> - search by keyword
+  mark <task number> - mark done (or bump a recurring one along)
+  unmark <task number> - mark not done
+  delete <task number> - remove a task
+  commands - show this list again
+  bye - head out
+____________________________________________________________
+____________________________________________________________
+Catch you on the flip side! 🌊
+____________________________________________________________
+```

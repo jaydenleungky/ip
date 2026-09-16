@@ -96,6 +96,22 @@ public class CocoTest {
     }
 
     @Test
+    public void getResponse_commands_listsEveryCommandAndItsSyntax() {
+        String reply = newCoco().getResponse("commands");
+
+        assertTrue(reply.contains("todo <description>"));
+        assertTrue(reply.contains("deadline <description> /by <yyyy-mm-dd>"));
+        assertTrue(reply.contains("event <description> /from <start> /to <end>"));
+        assertTrue(reply.contains("list"));
+        assertTrue(reply.contains("find <keyword>"));
+        assertTrue(reply.contains("mark <task number>"));
+        assertTrue(reply.contains("unmark <task number>"));
+        assertTrue(reply.contains("delete <task number>"));
+        assertTrue(reply.contains("commands"));
+        assertTrue(reply.contains("bye"));
+    }
+
+    @Test
     public void getResponse_invalidCommand_returnsErrorMessageInsteadOfThrowing() {
         assertEquals("Whoa, lost me there, chief. Try somethin' else?", newCoco().getResponse("blah"));
     }

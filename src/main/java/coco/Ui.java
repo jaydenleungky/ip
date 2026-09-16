@@ -149,4 +149,24 @@ public class Ui {
         }
         return message.toString();
     }
+
+    /**
+     * Returns the full list of commands and how to format each one.
+     *
+     * @return The formatted command reference.
+     */
+    public String commandsMessage() {
+        return "Here's the full lineup, no worries:\n"
+                + "  todo <description> - add a todo\n"
+                + "  deadline <description> /by <yyyy-mm-dd> [/every daily|weekly|monthly] "
+                + "- add a deadline, optionally recurring\n"
+                + "  event <description> /from <start> /to <end> - add an event\n"
+                + "  list - show every task\n"
+                + "  find <keyword> - search by keyword\n"
+                + "  mark <task number> - mark done (or bump a recurring one along)\n"
+                + "  unmark <task number> - mark not done\n"
+                + "  delete <task number> - remove a task\n"
+                + "  commands - show this list again\n"
+                + "  bye - head out";
+    }
 }

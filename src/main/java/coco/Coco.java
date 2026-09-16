@@ -99,6 +99,8 @@ public class Coco {
                 return addTask(Parser.parseEvent(input));
             case FIND:
                 return ui.findResultsMessage(tasks.find(Parser.parseFind(input)));
+            case COMMANDS:
+                return ui.commandsMessage();
             default:
                 throw new CocoException("Whoa, lost me there, chief. Try somethin' else?");
             }
