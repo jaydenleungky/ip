@@ -67,30 +67,12 @@ public class Coco {
             switch (command) {
             case LIST:
                 return ui.taskListMessage(tasks);
-            case MARK: {
-                int index = Parser.parseIndex(input, "mark", tasks.size());
-                Task task = tasks.get(index);
-                if (task instanceof Deadline deadline && deadline.isRecurring()) {
-                    deadline.advanceToNextOccurrence();
-                    storage.save(tasks.asList());
-                    return ui.taskRecurredMessage(deadline);
-                }
-                task.markAsDone();
-                storage.save(tasks.asList());
-                return ui.taskMarkedMessage(task);
-            }
-            case UNMARK: {
-                int index = Parser.parseIndex(input, "unmark", tasks.size());
-                tasks.get(index).markAsNotDone();
-                storage.save(tasks.asList());
-                return ui.taskUnmarkedMessage(tasks.get(index));
-            }
-            case DELETE: {
-                int index = Parser.parseIndex(input, "delete", tasks.size());
-                Task removed = tasks.remove(index);
-                storage.save(tasks.asList());
-                return ui.taskRemovedMessage(removed, tasks.size());
-            }
+            case MARK:
+                return handleMark(input);
+            case UNMARK:
+                return handleUnmark(input);
+            case DELETE:
+                return handleDelete(input);
             case TODO:
                 return addTask(Parser.parseTodo(input));
             case DEADLINE:
@@ -107,6 +89,58 @@ public class Coco {
         } catch (CocoException e) {
             return e.getMessage();
         }
+    }
+
+    /**
+     * Marks the referenced task done, unless it's a recurring deadline - in
+     * which case it advances to its next occurrence instead.
+     *
+     * @param input Raw user input line.
+     * @return The confirmation message.
+     * @throws CocoException If the task number is missing, invalid, or out
+     *                       of range.
+     */
+    private String handleMark(String input) throws CocoException {
+        int index = Parser.parseIndex(input, "mark", tasks.size());
+        Task task = tasks.get(index);
+        if (task instanceof Deadline deadline && deadline.isRecurring()) {
+            deadline.advanceToNextOccurrence();
+            storage.save(tasks.asList());
+            return ui.taskRecurredMessage(deadline);
+        }
+        task.markAsDone();
+        storage.save(tasks.asList());
+        return ui.taskMarkedMessage(task);
+    }
+
+    /**
+     * Marks the referenced task not done.
+     *
+     * @param input Raw user input line.
+     * @return The confirmation message.
+     * @throws CocoException If the task number is missing, invalid, or out
+     *                       of range.
+     */
+    private String handleUnmark(String input) throws CocoException {
+        int index = Parser.parseIndex(input, "unmark", tasks.size());
+        tasks.get(index).markAsNotDone();
+        storage.save(tasks.asList());
+        return ui.taskUnmarkedMessage(tasks.get(index));
+    }
+
+    /**
+     * Removes the referenced task from the list.
+     *
+     * @param input Raw user input line.
+     * @return The confirmation message.
+     * @throws CocoException If the task number is missing, invalid, or out
+     *                       of range.
+     */
+    private String handleDelete(String input) throws CocoException {
+        int index = Parser.parseIndex(input, "delete", tasks.size());
+        Task removed = tasks.remove(index);
+        storage.save(tasks.asList());
+        return ui.taskRemovedMessage(removed, tasks.size());
     }
 
     /**

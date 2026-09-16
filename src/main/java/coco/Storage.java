@@ -95,20 +95,7 @@ public class Storage {
             task = new Todo(description);
             break;
         case "D":
-            if (parts.length < 4) {
-                return null;
-            }
-            try {
-                LocalDate by = LocalDate.parse(parts[3]);
-                // A line saved before recurring deadlines existed has no
-                // 5th field; treat that the same as an explicit "-" (not
-                // recurring), rather than rejecting old save files.
-                boolean hasRecurrence = parts.length >= 5 && !parts[4].equals("-");
-                Recurrence recurrence = hasRecurrence ? Recurrence.valueOf(parts[4]) : null;
-                task = new Deadline(description, by, recurrence);
-            } catch (DateTimeParseException | IllegalArgumentException e) {
-                return null;
-            }
+            task = parseDeadlineLine(description, parts);
             break;
         case "E":
             if (parts.length < 5) {
@@ -120,12 +107,37 @@ public class Storage {
             return null;
         }
 
-        // Every branch above either returns null early or assigns task;
-        // documents that this point is only reachable with task assigned.
-        assert task != null : "task should be assigned by every non-returning switch branch";
+        if (task == null) {
+            return null;
+        }
         if (isDone) {
             task.markAsDone();
         }
         return task;
+    }
+
+    /**
+     * Parses a saved deadline line's date and, if present, its recurrence.
+     *
+     * @param description Already-extracted description field.
+     * @param parts The line's pipe-separated fields.
+     * @return The parsed Deadline, or null if the date/parts are malformed
+     *         (e.g. from manual editing of the data file).
+     */
+    private static Task parseDeadlineLine(String description, String[] parts) {
+        if (parts.length < 4) {
+            return null;
+        }
+        try {
+            LocalDate by = LocalDate.parse(parts[3]);
+            // A line saved before recurring deadlines existed has no 5th
+            // field; treat that the same as an explicit "-" (not
+            // recurring), rather than rejecting old save files.
+            boolean hasRecurrence = parts.length >= 5 && !parts[4].equals("-");
+            Recurrence recurrence = hasRecurrence ? Recurrence.valueOf(parts[4]) : null;
+            return new Deadline(description, by, recurrence);
+        } catch (DateTimeParseException | IllegalArgumentException e) {
+            return null;
+        }
     }
 }

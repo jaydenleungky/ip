@@ -55,36 +55,51 @@ public class Parser {
                             + "<description> /by <date> [/every daily|weekly|monthly]");
         }
         String description = rest.substring(0, byIndex).trim();
-        String afterBy = rest.substring(byIndex + "/by".length());
-        int everyIndex = afterBy.indexOf("/every");
-        String byText;
-        Recurrence recurrence = null;
-        if (everyIndex == -1) {
-            byText = afterBy.trim();
-        } else {
-            byText = afterBy.substring(0, everyIndex).trim();
-            String recurrenceText = afterBy.substring(everyIndex + "/every".length()).trim();
-            if (recurrenceText.isEmpty()) {
-                throw new CocoException(
-                        "How often's this thing happening? Give me "
-                                + "daily, weekly, or monthly.");
-            }
-            recurrence = Recurrence.fromText(recurrenceText);
-        }
+        DateAndRecurrence dateAndRecurrence = parseDateAndRecurrence(rest.substring(byIndex + "/by".length()));
         if (description.isEmpty()) {
             throw new CocoException("Hold up, the deadline needs an actual description!");
         }
-        if (byText.isEmpty()) {
+        if (dateAndRecurrence.byText().isEmpty()) {
             throw new CocoException("Hey now, gotta give me a date for that deadline!");
         }
         LocalDate by;
         try {
-            by = LocalDate.parse(byText);
+            by = LocalDate.parse(dateAndRecurrence.byText());
         } catch (DateTimeParseException e) {
-            throw new CocoException("Hmm, '" + byText
+            throw new CocoException("Hmm, '" + dateAndRecurrence.byText()
                     + "' doesn't look like a date to me. Use yyyy-mm-dd, like 2019-10-15.");
         }
-        return new Deadline(description, by, recurrence);
+        return new Deadline(description, by, dateAndRecurrence.recurrence());
+    }
+
+    /**
+     * A deadline's date text and optional recurrence, still unparsed - what
+     * comes after "/by" in a deadline command, split on an optional trailing
+     * "/every ...".
+     */
+    private record DateAndRecurrence(String byText, Recurrence recurrence) {
+    }
+
+    /**
+     * Splits the text after "/by" into the date text and, if a "/every
+     * <recurrence>" suffix is present, the recurrence it names.
+     *
+     * @param afterBy Everything after the "/by" marker.
+     * @return The split-out date text and recurrence (null if none given).
+     * @throws CocoException If "/every" is present but names no recurrence,
+     *                       or names one Recurrence.fromText doesn't recognize.
+     */
+    private static DateAndRecurrence parseDateAndRecurrence(String afterBy) throws CocoException {
+        int everyIndex = afterBy.indexOf("/every");
+        if (everyIndex == -1) {
+            return new DateAndRecurrence(afterBy.trim(), null);
+        }
+        String byText = afterBy.substring(0, everyIndex).trim();
+        String recurrenceText = afterBy.substring(everyIndex + "/every".length()).trim();
+        if (recurrenceText.isEmpty()) {
+            throw new CocoException("How often's this thing happening? Give me daily, weekly, or monthly.");
+        }
+        return new DateAndRecurrence(byText, Recurrence.fromText(recurrenceText));
     }
 
     /**
