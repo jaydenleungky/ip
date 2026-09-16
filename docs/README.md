@@ -69,8 +69,7 @@ Tossed that onto the pile, easy breezy:
 That's 2 things cookin' now.
 ```
 
-> [!TIP]
-> Marking a recurring deadline done doesn't complete it — see
+> **Tip:** Marking a recurring deadline done doesn't complete it — see
 > [Marking/unmarking tasks](#markingunmarking-a-task-mark-unmark) below.
 
 ### Adding an event: `event`
@@ -187,7 +186,7 @@ Catch you on the flip side! 🌊
 | Command | Format | Example |
 |---|---|---|
 | Add a todo | `todo <description>` | `todo read book` |
-| Add a deadline | `deadline <description> /by <yyyy-mm-dd> [/every daily\|weekly\|monthly]` | `deadline return book /by 2019-10-15` |
+| Add a deadline | `deadline <description> /by <yyyy-mm-dd> [/every daily|weekly|monthly]` | `deadline return book /by 2019-10-15` |
 | Add an event | `event <description> /from <start> /to <end>` | `event meeting /from Mon 2pm /to 4pm` |
 | List tasks | `list` | `list` |
 | Find tasks | `find <keyword>` | `find book` |
