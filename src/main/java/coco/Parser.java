@@ -28,7 +28,7 @@ public class Parser {
     public static Task parseTodo(String input) throws CocoException {
         String description = argumentsOf(input, Command.TODO).trim();
         if (description.isEmpty()) {
-            throw new CocoException("Sorry, todo description cannot be empty!");
+            throw new CocoException("Whoa, gotta tell me what the todo actually is!");
         }
         return new Todo(description);
     }
@@ -51,7 +51,7 @@ public class Parser {
         int byIndex = rest.indexOf("/by");
         if (byIndex == -1) {
             throw new CocoException(
-                    "Sorry, a deadline needs a '/by' date! Try: deadline "
+                    "Easy now, a deadline needs a '/by' date! Try: deadline "
                             + "<description> /by <date> [/every daily|weekly|monthly]");
         }
         String description = rest.substring(0, byIndex).trim();
@@ -66,23 +66,23 @@ public class Parser {
             String recurrenceText = afterBy.substring(everyIndex + "/every".length()).trim();
             if (recurrenceText.isEmpty()) {
                 throw new CocoException(
-                        "Sorry, tell me how often this deadline recurs! "
-                                + "Use daily, weekly, or monthly.");
+                        "How often's this thing happening? Give me "
+                                + "daily, weekly, or monthly.");
             }
             recurrence = Recurrence.fromText(recurrenceText);
         }
         if (description.isEmpty()) {
-            throw new CocoException("Sorry, deadline description cannot be empty!");
+            throw new CocoException("Hold up, the deadline needs an actual description!");
         }
         if (byText.isEmpty()) {
-            throw new CocoException("Sorry, the date for a deadline cannot be empty!");
+            throw new CocoException("Hey now, gotta give me a date for that deadline!");
         }
         LocalDate by;
         try {
             by = LocalDate.parse(byText);
         } catch (DateTimeParseException e) {
-            throw new CocoException("Sorry, '" + byText
-                    + "' is not a valid date! Please use yyyy-mm-dd, e.g. 2019-10-15.");
+            throw new CocoException("Hmm, '" + byText
+                    + "' doesn't look like a date to me. Use yyyy-mm-dd, like 2019-10-15.");
         }
         return new Deadline(description, by, recurrence);
     }
@@ -103,17 +103,17 @@ public class Parser {
         int toIndex = rest.indexOf("/to");
         if (fromIndex == -1 || toIndex == -1 || toIndex < fromIndex) {
             throw new CocoException(
-                    "Sorry, an event needs '/from' and '/to'! Try: event "
+                    "Easy now, an event needs a '/from' and '/to'! Try: event "
                             + "<description> /from <start> /to <end>");
         }
         String description = rest.substring(0, fromIndex).trim();
         String from = rest.substring(fromIndex + "/from".length(), toIndex).trim();
         String to = rest.substring(toIndex + "/to".length()).trim();
         if (description.isEmpty()) {
-            throw new CocoException("Sorry, event description cannot be empty!");
+            throw new CocoException("Hold up, the event needs an actual description!");
         }
         if (from.isEmpty() || to.isEmpty()) {
-            throw new CocoException("Sorry, an event needs both a start and end time!");
+            throw new CocoException("Gonna need both a start and end time for that one!");
         }
         return new Event(description, from, to);
     }
@@ -128,7 +128,7 @@ public class Parser {
     public static String parseFind(String input) throws CocoException {
         String keyword = argumentsOf(input, Command.FIND).trim();
         if (keyword.isEmpty()) {
-            throw new CocoException("Sorry, tell me what to find!");
+            throw new CocoException("What am I even looking for? Give me a keyword!");
         }
         return keyword;
     }
@@ -150,16 +150,17 @@ public class Parser {
                 ? input.substring(commandWord.length()).trim()
                 : "";
         if (arg.isEmpty()) {
-            throw new CocoException("Sorry, tell me which task number to " + commandWord + "!");
+            throw new CocoException("Which task number, chief? Gotta tell me that to "
+                    + commandWord + " it!");
         }
         int index;
         try {
             index = Integer.parseInt(arg) - 1;
         } catch (NumberFormatException e) {
-            throw new CocoException("Sorry, '" + arg + "' is not a valid task number!");
+            throw new CocoException("'" + arg + "' ain't a number I recognize!");
         }
         if (index < 0 || index >= taskCount) {
-            throw new CocoException("Sorry, there is no task number " + (index + 1) + "!");
+            throw new CocoException("No task number " + (index + 1) + " around here!");
         }
         // Documents the guarantee this method makes to its callers (Coco,
         // TaskList.get/remove): any index returned is already in range.

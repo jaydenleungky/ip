@@ -48,8 +48,8 @@ public class Storage {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Sorry, I couldn't read your saved tasks ("
-                    + e.getMessage() + "). Starting with an empty list.");
+            System.out.println("Couldn't dig up your saved tasks ("
+                    + e.getMessage() + "). Starting fresh!");
         }
         return tasks;
     }
@@ -69,7 +69,7 @@ public class Storage {
             List<String> lines = tasks.stream().map(Task::toSaveFormat).toList();
             Files.write(filePath, lines);
         } catch (IOException e) {
-            System.out.println("Sorry, I couldn't save your tasks (" + e.getMessage() + ").");
+            System.out.println("Couldn't stash your tasks away (" + e.getMessage() + ").");
         }
     }
 

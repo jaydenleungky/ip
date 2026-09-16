@@ -100,7 +100,7 @@ public class Coco {
             case FIND:
                 return ui.findResultsMessage(tasks.find(Parser.parseFind(input)));
             default:
-                throw new CocoException("Boy, what that mean?");
+                throw new CocoException("Whoa, lost me there, chief. Try somethin' else?");
             }
         } catch (CocoException e) {
             return e.getMessage();

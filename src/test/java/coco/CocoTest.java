@@ -19,7 +19,7 @@ public class CocoTest {
 
     @Test
     public void greet_newInstance_returnsWelcomeMessage() {
-        assertEquals("Hello! I'm Coco.\nWhat can I do for you?", newCoco().greet());
+        assertEquals("Hey hey, Coco here! 🌴\nWhat're we getting done today?", newCoco().greet());
     }
 
     @Test
@@ -28,10 +28,10 @@ public class CocoTest {
 
         String addReply = coco.getResponse("todo read book");
         assertTrue(addReply.contains("read book"));
-        assertTrue(addReply.contains("Now you have 1 tasks in the list."));
+        assertTrue(addReply.contains("That's 1 things cookin' now."));
 
         String listReply = coco.getResponse("list");
-        assertEquals("Here are the tasks in your list:\n1.[T][ ] read book", listReply);
+        assertEquals("Here's what's on your plate:\n1.[T][ ] read book", listReply);
     }
 
     @Test
@@ -52,8 +52,8 @@ public class CocoTest {
         coco.getResponse("todo read book");
 
         String deleteReply = coco.getResponse("delete 1");
-        assertTrue(deleteReply.contains("Now you have 0 tasks in the list."));
-        assertEquals("Here are the tasks in your list:", coco.getResponse("list"));
+        assertTrue(deleteReply.contains("That's 0 things left on the pile."));
+        assertEquals("Here's what's on your plate:", coco.getResponse("list"));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class CocoTest {
         coco.getResponse("deadline standup /by 2026-01-06 /every weekly");
 
         String firstMarkReply = coco.getResponse("mark 1");
-        assertTrue(firstMarkReply.contains("recurring"));
+        assertTrue(firstMarkReply.contains("on repeat"));
         assertTrue(firstMarkReply.contains("Jan 13 2026"));
         assertTrue(firstMarkReply.contains("[ ]"));
 
@@ -70,7 +70,7 @@ public class CocoTest {
         assertTrue(secondMarkReply.contains("Jan 20 2026"));
         assertTrue(secondMarkReply.contains("[ ]"));
 
-        assertEquals("Here are the tasks in your list:\n1.[D][ ] standup (by: Jan 20 2026) (every: weekly)",
+        assertEquals("Here's what's on your plate:\n1.[D][ ] standup (by: Jan 20 2026) (every: weekly)",
                 coco.getResponse("list"));
     }
 
@@ -81,7 +81,7 @@ public class CocoTest {
 
         String markReply = coco.getResponse("mark 1");
 
-        assertTrue(markReply.contains("marked this task as done"));
+        assertTrue(markReply.contains("Nice one, that's outta here"));
         assertTrue(markReply.contains("[X]"));
     }
 
@@ -92,16 +92,16 @@ public class CocoTest {
         coco.getResponse("todo buy groceries");
 
         String findReply = coco.getResponse("find book");
-        assertEquals("Here are the matching tasks in your list:\n1.[T][ ] read book", findReply);
+        assertEquals("Here's what I dug up:\n1.[T][ ] read book", findReply);
     }
 
     @Test
     public void getResponse_invalidCommand_returnsErrorMessageInsteadOfThrowing() {
-        assertEquals("Boy, what that mean?", newCoco().getResponse("blah"));
+        assertEquals("Whoa, lost me there, chief. Try somethin' else?", newCoco().getResponse("blah"));
     }
 
     @Test
     public void getResponse_bye_returnsGoodbyeMessage() {
-        assertEquals("Bye. Hope to see you again soon!", newCoco().getResponse("bye"));
+        assertEquals("Catch you on the flip side! 🌊", newCoco().getResponse("bye"));
     }
 }

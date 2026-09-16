@@ -36,18 +36,18 @@ ____________________________________________________________
 | |__| |_| | |__| |_| |
  \____\___/ \____\___/ 
 
-Hello! I'm Coco.
-What can I do for you?
+Hey hey, Coco here! 🌴
+What're we getting done today?
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Catch you on the flip side! 🌊
 ____________________________________________________________
 ```
 
 ## Test 2: Add a todo and list it
 
 Aim: Verify `todo <description>` adds a task with the `[T]` type marker, confirms
-with the "Got it" message and running count, and `list` shows it correctly.
+with the addition message and running count, and `list` shows it correctly.
 
 ### Input
 
@@ -67,20 +67,20 @@ ____________________________________________________________
 | |__| |_| | |__| |_| |
  \____\___/ \____\___/ 
 
-Hello! I'm Coco.
-What can I do for you?
+Hey hey, Coco here! 🌴
+What're we getting done today?
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [T][ ] borrow book
-Now you have 1 tasks in the list.
+That's 1 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Here's what's on your plate:
 1.[T][ ] borrow book
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Catch you on the flip side! 🌊
 ____________________________________________________________
 ```
 
@@ -111,26 +111,26 @@ ____________________________________________________________
 | |__| |_| | |__| |_| |
  \____\___/ \____\___/ 
 
-Hello! I'm Coco.
-What can I do for you?
+Hey hey, Coco here! 🌴
+What're we getting done today?
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [D][ ] return book (by: Oct 15 2019)
-Now you have 1 tasks in the list.
+That's 1 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [E][ ] project meeting (from: Mon 2pm to: 4pm)
-Now you have 2 tasks in the list.
+That's 2 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Here's what's on your plate:
 1.[D][ ] return book (by: Oct 15 2019)
 2.[E][ ] project meeting (from: Mon 2pm to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Catch you on the flip side! 🌊
 ____________________________________________________________
 ```
 
@@ -160,32 +160,32 @@ ____________________________________________________________
 | |__| |_| | |__| |_| |
  \____\___/ \____\___/ 
 
-Hello! I'm Coco.
-What can I do for you?
+Hey hey, Coco here! 🌴
+What're we getting done today?
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [T][ ] read book
-Now you have 1 tasks in the list.
+That's 1 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Nice one, that's outta here:
   [T][X] read book
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Here's what's on your plate:
 1.[T][X] read book
 ____________________________________________________________
 ____________________________________________________________
-OK, I've marked this task as not done yet:
+Ah, bringing it back, huh? Marked as not done:
   [T][ ] read book
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Here's what's on your plate:
 1.[T][ ] read book
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Catch you on the flip side! 🌊
 ____________________________________________________________
 ```
 
@@ -221,44 +221,44 @@ ____________________________________________________________
 | |__| |_| | |__| |_| |
  \____\___/ \____\___/ 
 
-Hello! I'm Coco.
-What can I do for you?
+Hey hey, Coco here! 🌴
+What're we getting done today?
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [T][ ] read book
-Now you have 1 tasks in the list.
+That's 1 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Nice one, that's outta here:
   [T][X] read book
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [D][ ] return book (by: Jun 06 2019)
-Now you have 2 tasks in the list.
+That's 2 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
-Now you have 3 tasks in the list.
+That's 3 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [T][ ] join sports club
-Now you have 4 tasks in the list.
+That's 4 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Nice one, that's outta here:
   [T][X] join sports club
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [T][ ] borrow book
-Now you have 5 tasks in the list.
+That's 5 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Here's what's on your plate:
 1.[T][X] read book
 2.[D][ ] return book (by: Jun 06 2019)
 3.[E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
@@ -266,17 +266,17 @@ Here are the tasks in your list:
 5.[T][ ] borrow book
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [D][ ] return book (by: Oct 15 2019)
-Now you have 6 tasks in the list.
+That's 6 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [E][ ] project meeting (from: Mon 2pm to: 4pm)
-Now you have 7 tasks in the list.
+That's 7 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Catch you on the flip side! 🌊
 ____________________________________________________________
 ```
 
@@ -311,35 +311,35 @@ ____________________________________________________________
 | |__| |_| | |__| |_| |
  \____\___/ \____\___/ 
 
-Hello! I'm Coco.
-What can I do for you?
+Hey hey, Coco here! 🌴
+What're we getting done today?
 ____________________________________________________________
 ____________________________________________________________
-Sorry, todo description cannot be empty!
+Whoa, gotta tell me what the todo actually is!
 ____________________________________________________________
 ____________________________________________________________
-Sorry, a deadline needs a '/by' date! Try: deadline <description> /by <date> [/every daily|weekly|monthly]
+Easy now, a deadline needs a '/by' date! Try: deadline <description> /by <date> [/every daily|weekly|monthly]
 ____________________________________________________________
 ____________________________________________________________
-Sorry, a deadline needs a '/by' date! Try: deadline <description> /by <date> [/every daily|weekly|monthly]
+Easy now, a deadline needs a '/by' date! Try: deadline <description> /by <date> [/every daily|weekly|monthly]
 ____________________________________________________________
 ____________________________________________________________
-Sorry, the date for a deadline cannot be empty!
+Hey now, gotta give me a date for that deadline!
 ____________________________________________________________
 ____________________________________________________________
-Sorry, 'tomorrow' is not a valid date! Please use yyyy-mm-dd, e.g. 2019-10-15.
+Hmm, 'tomorrow' doesn't look like a date to me. Use yyyy-mm-dd, like 2019-10-15.
 ____________________________________________________________
 ____________________________________________________________
-Sorry, an event needs '/from' and '/to'! Try: event <description> /from <start> /to <end>
+Easy now, an event needs a '/from' and '/to'! Try: event <description> /from <start> /to <end>
 ____________________________________________________________
 ____________________________________________________________
-Sorry, an event needs '/from' and '/to'! Try: event <description> /from <start> /to <end>
+Easy now, an event needs a '/from' and '/to'! Try: event <description> /from <start> /to <end>
 ____________________________________________________________
 ____________________________________________________________
-Sorry, an event needs '/from' and '/to'! Try: event <description> /from <start> /to <end>
+Easy now, an event needs a '/from' and '/to'! Try: event <description> /from <start> /to <end>
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Catch you on the flip side! 🌊
 ____________________________________________________________
 ```
 
@@ -365,14 +365,14 @@ ____________________________________________________________
 | |__| |_| | |__| |_| |
  \____\___/ \____\___/ 
 
-Hello! I'm Coco.
-What can I do for you?
+Hey hey, Coco here! 🌴
+What're we getting done today?
 ____________________________________________________________
 ____________________________________________________________
-Boy, what that mean?
+Whoa, lost me there, chief. Try somethin' else?
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Catch you on the flip side! 🌊
 ____________________________________________________________
 ```
 
@@ -403,28 +403,28 @@ ____________________________________________________________
 | |__| |_| | |__| |_| |
  \____\___/ \____\___/ 
 
-Hello! I'm Coco.
-What can I do for you?
+Hey hey, Coco here! 🌴
+What're we getting done today?
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [T][ ] read book
-Now you have 1 tasks in the list.
+That's 1 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Sorry, there is no task number 5!
+No task number 5 around here!
 ____________________________________________________________
 ____________________________________________________________
-Sorry, 'abc' is not a valid task number!
+'abc' ain't a number I recognize!
 ____________________________________________________________
 ____________________________________________________________
-Sorry, tell me which task number to mark!
+Which task number, chief? Gotta tell me that to mark it!
 ____________________________________________________________
 ____________________________________________________________
-Sorry, there is no task number 0!
+No task number 0 around here!
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Catch you on the flip side! 🌊
 ____________________________________________________________
 ```
 
@@ -472,79 +472,79 @@ ____________________________________________________________
 | |__| |_| | |__| |_| |
  \____\___/ \____\___/ 
 
-Hello! I'm Coco.
-What can I do for you?
+Hey hey, Coco here! 🌴
+What're we getting done today?
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [T][ ] read book
-Now you have 1 tasks in the list.
+That's 1 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Sorry, todo description cannot be empty!
+Whoa, gotta tell me what the todo actually is!
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Here's what's on your plate:
 1.[T][ ] read book
 ____________________________________________________________
 ____________________________________________________________
-Sorry, there is no task number 2!
+No task number 2 around here!
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Here's what's on your plate:
 1.[T][ ] read book
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Nice one, that's outta here:
   [T][X] read book
 ____________________________________________________________
 ____________________________________________________________
-Sorry, there is no task number 2!
+No task number 2 around here!
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Here's what's on your plate:
 1.[T][X] read book
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [D][ ] return book (by: Jun 06 2019)
-Now you have 2 tasks in the list.
+That's 2 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Sorry, the date for a deadline cannot be empty!
+Hey now, gotta give me a date for that deadline!
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [E][ ] meeting (from: Mon 2pm to: 4pm)
-Now you have 3 tasks in the list.
+That's 3 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Sorry, an event needs '/from' and '/to'! Try: event <description> /from <start> /to <end>
+Easy now, an event needs a '/from' and '/to'! Try: event <description> /from <start> /to <end>
 ____________________________________________________________
 ____________________________________________________________
-Boy, what that mean?
+Whoa, lost me there, chief. Try somethin' else?
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Here's what's on your plate:
 1.[T][X] read book
 2.[D][ ] return book (by: Jun 06 2019)
 3.[E][ ] meeting (from: Mon 2pm to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
-Sorry, there is no task number 4!
+No task number 4 around here!
 ____________________________________________________________
 ____________________________________________________________
-OK, I've marked this task as not done yet:
+Ah, bringing it back, huh? Marked as not done:
   [T][ ] read book
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Here's what's on your plate:
 1.[T][ ] read book
 2.[D][ ] return book (by: Jun 06 2019)
 3.[E][ ] meeting (from: Mon 2pm to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Catch you on the flip side! 🌊
 ____________________________________________________________
 ```
 
@@ -581,48 +581,48 @@ ____________________________________________________________
 | |__| |_| | |__| |_| |
  \____\___/ \____\___/ 
 
-Hello! I'm Coco.
-What can I do for you?
+Hey hey, Coco here! 🌴
+What're we getting done today?
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [T][ ] read book
-Now you have 1 tasks in the list.
+That's 1 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Nice one, that's outta here:
   [T][X] read book
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [D][ ] return book (by: Jun 06 2019)
-Now you have 2 tasks in the list.
+That's 2 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Nice one, that's outta here:
   [D][X] return book (by: Jun 06 2019)
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
-Now you have 3 tasks in the list.
+That's 3 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [T][ ] join sports club
-Now you have 4 tasks in the list.
+That's 4 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Nice one, that's outta here:
   [T][X] join sports club
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [T][ ] borrow book
-Now you have 5 tasks in the list.
+That's 5 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Here's what's on your plate:
 1.[T][X] read book
 2.[D][X] return book (by: Jun 06 2019)
 3.[E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
@@ -630,19 +630,19 @@ Here are the tasks in your list:
 5.[T][ ] borrow book
 ____________________________________________________________
 ____________________________________________________________
-Noted. I've removed this task:
+Alright, cleared that one out:
   [E][ ] project meeting (from: Aug 6th 2pm to: 4pm)
-Now you have 4 tasks in the list.
+That's 4 things left on the pile.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Here's what's on your plate:
 1.[T][X] read book
 2.[D][X] return book (by: Jun 06 2019)
 3.[T][X] join sports club
 4.[T][ ] borrow book
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Catch you on the flip side! 🌊
 ____________________________________________________________
 ```
 
@@ -676,37 +676,37 @@ ____________________________________________________________
 | |__| |_| | |__| |_| |
  \____\___/ \____\___/ 
 
-Hello! I'm Coco.
-What can I do for you?
+Hey hey, Coco here! 🌴
+What're we getting done today?
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [T][ ] read book
-Now you have 1 tasks in the list.
+That's 1 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Sorry, there is no task number 5!
+No task number 5 around here!
 ____________________________________________________________
 ____________________________________________________________
-Sorry, 'abc' is not a valid task number!
+'abc' ain't a number I recognize!
 ____________________________________________________________
 ____________________________________________________________
-Sorry, tell me which task number to delete!
+Which task number, chief? Gotta tell me that to delete it!
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Here's what's on your plate:
 1.[T][ ] read book
 ____________________________________________________________
 ____________________________________________________________
-Noted. I've removed this task:
+Alright, cleared that one out:
   [T][ ] read book
-Now you have 0 tasks in the list.
+That's 0 things left on the pile.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Here's what's on your plate:
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Catch you on the flip side! 🌊
 ____________________________________________________________
 ```
 
@@ -742,45 +742,45 @@ ____________________________________________________________
 | |__| |_| | |__| |_| |
  \____\___/ \____\___/ 
 
-Hello! I'm Coco.
-What can I do for you?
+Hey hey, Coco here! 🌴
+What're we getting done today?
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [T][ ] read book
-Now you have 1 tasks in the list.
+That's 1 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [D][ ] return book (by: Jun 06 2019)
-Now you have 2 tasks in the list.
+That's 2 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Nice one, that's outta here:
   [T][X] read book
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Nice one, that's outta here:
   [D][X] return book (by: Jun 06 2019)
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [T][ ] join sports club
-Now you have 3 tasks in the list.
+That's 3 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Here are the matching tasks in your list:
+Here's what I dug up:
 1.[T][X] read book
 2.[D][X] return book (by: Jun 06 2019)
 ____________________________________________________________
 ____________________________________________________________
-Here are the matching tasks in your list:
+Here's what I dug up:
 ____________________________________________________________
 ____________________________________________________________
-Sorry, tell me what to find!
+What am I even looking for? Give me a keyword!
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Catch you on the flip side! 🌊
 ____________________________________________________________
 ```
 
@@ -818,45 +818,45 @@ ____________________________________________________________
 | |__| |_| | |__| |_| |
  \____\___/ \____\___/ 
 
-Hello! I'm Coco.
-What can I do for you?
+Hey hey, Coco here! 🌴
+What're we getting done today?
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [D][ ] standup (by: Jan 06 2026) (every: daily)
-Now you have 1 tasks in the list.
+That's 1 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Tossed that onto the pile, easy breezy:
   [D][ ] submit report (by: Jan 10 2026)
-Now you have 2 tasks in the list.
+That's 2 things cookin' now.
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Here's what's on your plate:
 1.[D][ ] standup (by: Jan 06 2026) (every: daily)
 2.[D][ ] submit report (by: Jan 10 2026)
 ____________________________________________________________
 ____________________________________________________________
-This is a recurring task, so I've moved it to its next occurrence instead of marking it done:
+That one's on repeat, so I bumped it to the next round instead of calling it done:
   [D][ ] standup (by: Jan 07 2026) (every: daily)
 ____________________________________________________________
 ____________________________________________________________
-Here are the tasks in your list:
+Here's what's on your plate:
 1.[D][ ] standup (by: Jan 07 2026) (every: daily)
 2.[D][ ] submit report (by: Jan 10 2026)
 ____________________________________________________________
 ____________________________________________________________
-Nice! I've marked this task as done:
+Nice one, that's outta here:
   [D][X] submit report (by: Jan 10 2026)
 ____________________________________________________________
 ____________________________________________________________
-This is a recurring task, so I've moved it to its next occurrence instead of marking it done:
+That one's on repeat, so I bumped it to the next round instead of calling it done:
   [D][ ] standup (by: Jan 08 2026) (every: daily)
 ____________________________________________________________
 ____________________________________________________________
-Sorry, 'fortnightly' is not a valid recurrence! Use daily, weekly, or monthly.
+'fortnightly' isn't a recurrence I know. Try daily, weekly, or monthly.
 ____________________________________________________________
 ____________________________________________________________
-Bye. Hope to see you again soon!
+Catch you on the flip side! 🌊
 ____________________________________________________________
 ```
