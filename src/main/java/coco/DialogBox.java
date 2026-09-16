@@ -59,14 +59,14 @@ public class DialogBox extends HBox {
     }
 
     /**
-     * Builds Coco's avatar: a small solid-color circle with a "C" glyph.
-     * Drawn as a vector shape rather than an image file, so there's no
-     * rectangular background to clash with the window behind it, and no
+     * Builds Coco's avatar: a small solid-color circle with a palm tree
+     * glyph. Drawn as a vector shape rather than an image file, so there's
+     * no rectangular background to clash with the window behind it, and no
      * binary asset to track in version control.
      */
     private static StackPane createAvatar() {
-        Circle circle = new Circle(AVATAR_RADIUS, Color.web("#4A90E2"));
-        Label glyph = new Label("C");
+        Circle circle = new Circle(AVATAR_RADIUS, Color.web("#FF8A5B"));
+        Label glyph = new Label("🌴");
         glyph.getStyleClass().add("avatar-glyph");
         return new StackPane(circle, glyph);
     }

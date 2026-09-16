@@ -1,5 +1,5 @@
 .root {
-    -fx-background-color: #F5F5F7;
+    -fx-background-color: #F5EBD8;
     -fx-font-family: "Helvetica Neue", Arial, sans-serif;
     -fx-font-size: 13px;
 }
@@ -20,7 +20,7 @@
 /* The user's own message: plain text, no bubble - see DialogBox's Javadoc
    for why the two sides are styled asymmetrically. */
 .user-message {
-    -fx-text-fill: #3C3C43;
+    -fx-text-fill: #6B4A32;
     -fx-padding: 6 2 6 2;
 }
 
@@ -28,29 +28,27 @@
    .label default would otherwise apply to every Label including the
    avatar's glyph below - scoped here instead so that glyph stays plain. */
 .coco-bubble {
-    -fx-background-color: #E5E5EA;
-    -fx-text-fill: #1C1C1E;
+    -fx-background-color: #BEE6DD;
+    -fx-text-fill: #123F39;
     -fx-background-radius: 14;
     -fx-padding: 8 12 8 12;
 }
 
 .avatar-glyph {
-    -fx-text-fill: white;
-    -fx-font-size: 12px;
-    -fx-font-weight: bold;
+    -fx-font-size: 14px;
 }
 
 .user-input {
     -fx-background-radius: 18;
     -fx-background-color: white;
-    -fx-border-color: #D1D1D6;
+    -fx-border-color: #D9C4A0;
     -fx-border-radius: 18;
     -fx-padding: 6 14 6 14;
 }
 
 .send-button {
     -fx-background-radius: 18;
-    -fx-background-color: #4A90E2;
+    -fx-background-color: #FF8A5B;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-cursor: hand;
@@ -58,9 +56,9 @@
 }
 
 .send-button:hover {
-    -fx-background-color: #3A7BC8;
+    -fx-background-color: #F4713F;
 }
 
 .send-button:pressed {
-    -fx-background-color: #2E62A0;
+    -fx-background-color: #D65A2D;
 }

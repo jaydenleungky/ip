@@ -21,8 +21,8 @@ public enum Recurrence {
         try {
             return valueOf(text.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new CocoException("Sorry, '" + text
-                    + "' is not a valid recurrence! Use daily, weekly, or monthly.");
+            throw new CocoException("'" + text
+                    + "' isn't a recurrence I know. Try daily, weekly, or monthly.");
         }
     }
 

@@ -17,7 +17,7 @@ public class ParserTest {
     @Test
     public void parseTodo_emptyDescription_exceptionThrown() {
         CocoException e = assertThrows(CocoException.class, () -> Parser.parseTodo("todo"));
-        assertEquals("Sorry, todo description cannot be empty!", e.getMessage());
+        assertEquals("Whoa, gotta tell me what the todo actually is!", e.getMessage());
     }
 
     @Test
@@ -47,14 +47,14 @@ public class ParserTest {
     public void parseDeadline_emptyDate_exceptionThrown() {
         CocoException e = assertThrows(CocoException.class,
                 () -> Parser.parseDeadline("deadline return book /by"));
-        assertEquals("Sorry, the date for a deadline cannot be empty!", e.getMessage());
+        assertEquals("Hey now, gotta give me a date for that deadline!", e.getMessage());
     }
 
     @Test
     public void parseDeadline_invalidDateFormat_exceptionThrown() {
         CocoException e = assertThrows(CocoException.class,
                 () -> Parser.parseDeadline("deadline return book /by tomorrow"));
-        assertTrue(e.getMessage().contains("not a valid date"));
+        assertTrue(e.getMessage().contains("doesn't look like a date"));
     }
 
     @Test
@@ -73,14 +73,14 @@ public class ParserTest {
     public void parseDeadline_invalidRecurrence_exceptionThrown() {
         CocoException e = assertThrows(CocoException.class,
                 () -> Parser.parseDeadline("deadline standup /by 2019-10-15 /every fortnightly"));
-        assertTrue(e.getMessage().contains("not a valid recurrence"));
+        assertTrue(e.getMessage().contains("isn't a recurrence I know"));
     }
 
     @Test
     public void parseDeadline_emptyRecurrence_exceptionThrown() {
         CocoException e = assertThrows(CocoException.class,
                 () -> Parser.parseDeadline("deadline standup /by 2019-10-15 /every"));
-        assertTrue(e.getMessage().contains("how often"));
+        assertTrue(e.getMessage().contains("How often's this thing happening"));
     }
 
     @Test
@@ -114,7 +114,7 @@ public class ParserTest {
     @Test
     public void parseFind_emptyKeyword_exceptionThrown() {
         CocoException e = assertThrows(CocoException.class, () -> Parser.parseFind("find"));
-        assertEquals("Sorry, tell me what to find!", e.getMessage());
+        assertEquals("What am I even looking for? Give me a keyword!", e.getMessage());
     }
 
     @Test
@@ -131,7 +131,7 @@ public class ParserTest {
     public void parseIndex_missingArgument_exceptionThrown() {
         CocoException e = assertThrows(CocoException.class,
                 () -> Parser.parseIndex("mark", "mark", 5));
-        assertEquals("Sorry, tell me which task number to mark!", e.getMessage());
+        assertEquals("Which task number, chief? Gotta tell me that to mark it!", e.getMessage());
     }
 
     @Test
@@ -143,7 +143,7 @@ public class ParserTest {
     public void parseIndex_outOfRangeTooHigh_exceptionThrown() {
         CocoException e = assertThrows(CocoException.class,
                 () -> Parser.parseIndex("mark 6", "mark", 5));
-        assertEquals("Sorry, there is no task number 6!", e.getMessage());
+        assertEquals("No task number 6 around here!", e.getMessage());
     }
 
     @Test

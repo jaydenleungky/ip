@@ -30,7 +30,7 @@ public class Ui {
 
     /** Returns the greeting shown at startup (without the console banner). */
     public String greetingMessage() {
-        return "Hello! I'm Coco.\nWhat can I do for you?";
+        return "Hey hey, Coco here! 🌴\nWhat're we getting done today?";
     }
 
     /** Prints the goodbye message shown when the user exits. */
@@ -42,7 +42,7 @@ public class Ui {
 
     /** Returns the goodbye message shown when the user exits. */
     public String goodbyeMessage() {
-        return "Bye. Hope to see you again soon!";
+        return "Catch you on the flip side! 🌊";
     }
 
     /** Prints a divider line, used to separate one response from the next. */
@@ -72,8 +72,8 @@ public class Ui {
      * @return The confirmation message.
      */
     public String taskAddedMessage(Task task, int taskCount) {
-        return "Got it. I've added this task:\n  " + task
-                + "\nNow you have " + taskCount + " tasks in the list.";
+        return "Tossed that onto the pile, easy breezy:\n  " + task
+                + "\nThat's " + taskCount + " things cookin' now.";
     }
 
     /**
@@ -84,8 +84,8 @@ public class Ui {
      * @return The confirmation message.
      */
     public String taskRemovedMessage(Task task, int taskCount) {
-        return "Noted. I've removed this task:\n  " + task
-                + "\nNow you have " + taskCount + " tasks in the list.";
+        return "Alright, cleared that one out:\n  " + task
+                + "\nThat's " + taskCount + " things left on the pile.";
     }
 
     /**
@@ -95,7 +95,7 @@ public class Ui {
      * @return The confirmation message.
      */
     public String taskMarkedMessage(Task task) {
-        return "Nice! I've marked this task as done:\n  " + task;
+        return "Nice one, that's outta here:\n  " + task;
     }
 
     /**
@@ -105,7 +105,7 @@ public class Ui {
      * @return The confirmation message.
      */
     public String taskUnmarkedMessage(Task task) {
-        return "OK, I've marked this task as not done yet:\n  " + task;
+        return "Ah, bringing it back, huh? Marked as not done:\n  " + task;
     }
 
     /**
@@ -117,8 +117,8 @@ public class Ui {
      * @return The confirmation message.
      */
     public String taskRecurredMessage(Deadline deadline) {
-        return "This is a recurring task, so I've moved it to its next "
-                + "occurrence instead of marking it done:\n  " + deadline;
+        return "That one's on repeat, so I bumped it to the next round "
+                + "instead of calling it done:\n  " + deadline;
     }
 
     /**
@@ -128,7 +128,7 @@ public class Ui {
      * @return The formatted list.
      */
     public String taskListMessage(TaskList tasks) {
-        StringBuilder message = new StringBuilder("Here are the tasks in your list:");
+        StringBuilder message = new StringBuilder("Here's what's on your plate:");
         for (int i = 0; i < tasks.size(); i++) {
             message.append("\n").append(i + 1).append(".").append(tasks.get(i));
         }
@@ -143,7 +143,7 @@ public class Ui {
      * @return The formatted list.
      */
     public String findResultsMessage(List<Task> matches) {
-        StringBuilder message = new StringBuilder("Here are the matching tasks in your list:");
+        StringBuilder message = new StringBuilder("Here's what I dug up:");
         for (int i = 0; i < matches.size(); i++) {
             message.append("\n").append(i + 1).append(".").append(matches.get(i));
         }
